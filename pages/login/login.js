@@ -3,8 +3,8 @@
   const form = document.getElementById("loginForm");
   const errorBox = document.getElementById("login-error");
 
-  form.addEventListener("submit", e => {
-    e.preventDefault();
+  form.addEventListener("submit", event => {
+    event.preventDefault();
 
     const username = document.getElementById("login-username").value.trim();
     const password = document.getElementById("login-password").value;
@@ -12,51 +12,50 @@
     const users = JSON.parse(localStorage.getItem("users")) || [];
     const user = users.find(u => u.username === username);
 
-    if (!user) return showError("משתמש לא קיים");
+    if (!user) return showError("User does not exist");
 
-    // בדיקת חסימה
     if (user.blockedUntil && Date.now() < user.blockedUntil) {
-      const min = Math.ceil((user.blockedUntil - Date.now()) / 60000);
-      return showError(`המשתמש חסום לעוד ${min} דקות`);
+      const minutesLeft = Math.ceil(
+        (user.blockedUntil - Date.now()) / 60000
+      );
+      return showError(`User is blocked for ${minutesLeft} more minutes`);
     }
 
-    // בדיקת סיסמה
     if (user.password !== password) {
       user.attempts = (user.attempts || 0) + 1;
 
       if (user.attempts >= 3) {
         user.blockedUntil = Date.now() + 5 * 60 * 1000;
         user.attempts = 0;
-        save(users);
-        return showError("נחסמת ל־5 דקות");
+        saveUsers(users);
+        return showError("You are blocked for 5 minutes");
       }
 
-      save(users);
-      return showError("סיסמה שגויה");
+      saveUsers(users);
+      return showError("Wrong password");
     }
 
-    // הצלחה
     user.attempts = 0;
     user.blockedUntil = null;
     user.lastLogin = new Date().toISOString();
 
-    save(users);
+    saveUsers(users);
     setCookie("loggedUser", username, 1);
 
     loadPage("home");
   });
 
-  function save(users) {
+  function saveUsers(users) {
     localStorage.setItem("users", JSON.stringify(users));
   }
 
-  function showError(msg) {
-    errorBox.textContent = msg;
+  function showError(message) {
+    errorBox.textContent = message;
   }
 
   function setCookie(name, value, hours) {
-    const exp = new Date(Date.now() + hours * 3600000).toUTCString();
-    document.cookie = `${name}=${value}; expires=${exp}; path=/`;
+    const expires = new Date(Date.now() + hours * 3600000).toUTCString();
+    document.cookie = `${name}=${value}; expires=${expires}; path=/`;
   }
 
 })();

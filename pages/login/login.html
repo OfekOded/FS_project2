@@ -2,22 +2,22 @@
 
   <div class="auth-card">
 
-    <h1 class="auth-title">התחברות</h1>
+    <h1 class="auth-title">Login</h1>
 
     <form id="loginForm" novalidate>
 
       <div class="field">
-        <label for="login-username">שם משתמש</label>
+        <label for="login-username">Username</label>
         <input id="login-username" type="text" required>
       </div>
 
       <div class="field">
-        <label for="login-password">סיסמה</label>
+        <label for="login-password">Password</label>
         <input id="login-password" type="password" required>
       </div>
 
       <button class="btn-primary" type="submit">
-        התחבר
+        Login
       </button>
 
       <p id="login-error" class="error"></p>
@@ -25,8 +25,8 @@
     </form>
 
     <p class="auth-footer">
-      אין לך משתמש?
-      <a href="#" onclick="loadPage('register')">הרשמה</a>
+      Don't have an account?
+      <a href="#" onclick="loadPage('register')">Register</a>
     </p>
 
   </div>
