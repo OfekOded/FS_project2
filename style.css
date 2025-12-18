@@ -1,0 +1,41 @@
+:root {
+  /* ===== Base Backgrounds ===== */
+  --bg-primary: #0B0E14;     
+  --bg-secondary: #c81212;   
+
+  /* ===== Text Colors ===== */
+  --text-primary: #EAEAF0;   
+  --text-secondary: #9CA3AF; 
+
+  /* ===== Accent / Neon Colors ===== */
+  --accent-blue: #00E5FF;    
+  --accent-purple: #8B5CF6; 
+  --accent-pink: #FF2E88;   
+
+  /* ===== Status Colors ===== */
+  --success: #00FF9C;       
+  --warning: #FFC857;       
+  --error: #FF3B3B;         
+
+  /* ===== Gradients ===== */
+  --gradient-primary: linear-gradient(135deg, #00E5FF, #8B5CF6);
+  --gradient-secondary: linear-gradient(135deg, #FF2E88, #8B5CF6);
+
+  /* ===== Glow Effects ===== */
+  --glow-blue: 0 0 15px rgba(0, 229, 255, 0.6);
+  --glow-purple: 0 0 15px rgba(139, 92, 246, 0.6);
+  --glow-pink: 0 0 15px rgba(255, 46, 136, 0.6);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}

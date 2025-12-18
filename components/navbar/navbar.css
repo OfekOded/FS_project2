@@ -1,0 +1,91 @@
+.main-nav {
+    background-color: rgba(11, 14, 20, 0.85);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 2px solid transparent;
+    border-image: var(--gradient-primary) 1;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(var(--glow-blue));
+    cursor: pointer;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 15px;
+}
+
+.nav-links button {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    padding: 5px 0;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.nav-links button::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--gradient-primary);
+    transition: width 0.3s ease;
+}
+
+.nav-links button:hover {
+    color: var(--text-primary);
+    text-shadow: var(--glow-blue);
+}
+
+.nav-links button:hover::after {
+    width: 100%;
+}
+
+.nav-links button:active {
+    transform: scale(0.95);
+}
+
+@media (min-width: 768px) {
+    .main-nav {
+        padding: 0 60px;
+        height: 80px;
+    }
+
+    .logo {
+        font-size: 28px;
+        letter-spacing: 3px;
+    }
+
+    .nav-links {
+        gap: 40px;
+    }
+
+    .nav-links button {
+        font-size: 16px;
+        padding: 10px 0;
+    }
+}

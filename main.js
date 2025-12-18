@@ -1,23 +1,23 @@
-async function loadComponent(containerId, folderPath, fileName) {
-    const response = await fetch(`${folderPath}/${fileName}.html`);
+async function loadComponent(containerId, path, name) {
+    const response = await fetch(`${path}/${name}.html`);
     const html = await response.text();
     document.getElementById(containerId).innerHTML = html;
 
-    const cssId = `css-${fileName}`;
-    if (!document.getElementById(cssId)) {
-        const link = document.createElement("link");
-        link.id = cssId;
-        link.rel = "stylesheet";
-        link.href = `${folderPath}/${fileName}.css`;
-        document.head.appendChild(link);
-    }
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = `${path}/${name}.css`;
+    document.head.appendChild(link);
 
     const script = document.createElement("script");
-    script.src = `${folderPath}/${fileName}.js`;
+    script.src = `${path}/${name}.js`;
     document.body.appendChild(script);
+}
+
+function loadPage(pageName) {
+    loadComponent("content-placeholder", `pages/${pageName}`, pageName);
 }
 
 window.onload = () => {
     loadComponent("navbar-container", "components/navbar", "navbar");
-    loadComponent("content-placeholder", "pages/home", "home");
+    loadPage("home");
 };
