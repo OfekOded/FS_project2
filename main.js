@@ -19,5 +19,6 @@ function loadPage(pageName) {
 
 window.onload = () => {
     loadComponent("navbar-container", "components/navbar", "navbar");
+    loadComponent("footer-container", "components/footer", "footer");
     loadPage("home");
 };

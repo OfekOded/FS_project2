@@ -13,16 +13,14 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
-.logo {
-    font-size: 20px;
-    font-weight: 900;
+.nav-logo {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--text-primary);
     text-transform: uppercase;
     letter-spacing: 2px;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(var(--glow-blue));
     cursor: pointer;
+    transition: transform 0.3s ease, text-shadow 0.3s ease;
 }
 
 .nav-links {

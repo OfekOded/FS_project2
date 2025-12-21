@@ -1,34 +1,29 @@
-<section class="auth">
+<div class="auth-container">
+    <div class="auth-card">
+        
+        <h1 class="auth-title">LOGIN</h1>
 
-  <div class="auth-card">
+        <form id="loginForm" novalidate>
+            <div class="field">
+                <label for="login-username">Username</label>
+                <input id="login-username" type="text" required autocomplete="off">
+            </div>
 
-    <h1 class="auth-title">Login</h1>
+            <div class="field">
+                <label for="login-password">Password</label>
+                <input id="login-password" type="password" required>
+            </div>
 
-    <form id="loginForm" novalidate>
+            <button class="btn-primary" type="submit">
+                LOGIN
+            </button>
 
-      <div class="field">
-        <label for="login-username">Username</label>
-        <input id="login-username" type="text" required>
-      </div>
+            <p id="login-error" class="error"></p>
+        </form>
 
-      <div class="field">
-        <label for="login-password">Password</label>
-        <input id="login-password" type="password" required>
-      </div>
-
-      <button class="btn-primary" type="submit">
-        Login
-      </button>
-
-      <p id="login-error" class="error"></p>
-
-    </form>
-
-    <p class="auth-footer">
-      Don't have an account?
-      <a href="#" onclick="loadPage('register')">Register</a>
-    </p>
-
-  </div>
-
-</section>
+        <p class="auth-footer">
+            Don't have an account?
+            <a href="#" onclick="loadPage('register'); return false;">Register</a>
+        </p>
+    </div>
+</div>
