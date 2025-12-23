@@ -36,7 +36,7 @@ function handleLogin(event) {
   saveUsers(users);
   setCookie("loggedUser", username, 1);
 
-  loadPage("home");
+  loadPage("games-gallery");
 }
 
 function showError(errorBox, message) {
