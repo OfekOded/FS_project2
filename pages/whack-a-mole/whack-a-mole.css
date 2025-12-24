@@ -1,0 +1,107 @@
+.wam-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    cursor: none;
+}
+
+.wam-main-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+}
+
+.wam-controls {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 15px;
+}
+
+.wam-select {
+    padding: 10px;
+    background: var(--bg-card);
+    color: white;
+    border: 1px solid var(--accent-blue);
+    border-radius: 8px;
+    outline: none;
+}
+
+.wam-stats-bar {
+    display: flex;
+    gap: 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--accent-blue);
+    margin-bottom: 30px;
+}
+
+.wam-game-area {
+    display: grid;
+    grid-template-columns: repeat(3, 120px);
+    gap: 20px;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.wam-hole {
+    width: 120px;
+    height: 120px;
+    background: #1e293b;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 15px #000;
+    border: 2px solid #2d3748;
+}
+
+.wam-mole {
+    position: absolute;
+    bottom: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85px;
+    height: 85px;
+    background: radial-gradient(circle, #a16207, #713f12);
+    border-radius: 50%;
+    transition: bottom 0.15s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+}
+
+.wam-mole::after {
+    content: "🐹";
+}
+
+.wam-mole.up {
+    bottom: 10px;
+}
+
+#wam-hammer {
+    position: fixed;
+    font-size: 60px;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%) rotate(20deg);
+    transition: transform 0.05s ease;
+    display: none;
+}
+
+.wam-container:hover #wam-hammer {
+    display: block;
+}
+
+#wam-hammer.hit {
+    transform: translate(-50%, -50%) rotate(-40deg) scale(1.2);
+}
+
+.wam-footer-actions {
+    margin-top: 40px;
+}
