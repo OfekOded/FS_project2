@@ -1,44 +1,44 @@
-<div class="auth-container">
-    <div class="register-card">
-        <div class="register-header">
-            <h2>CREATE ACCOUNT</h2>
-            <p>Join the next level community.</p>
+<div class="reg-wrapper">
+    <div class="reg-container">
+        <div class="reg-header">
+            <h2 class="reg-title">CREATE ACCOUNT</h2>
+            <p class="reg-subtitle">Join the elite squad today</p>
         </div>
 
-        <form class="register-form">
-            <div class="input-group">
-                <label for="reg-username">Username</label>
-                <input type="text" id="reg-username" name="username" required autocomplete="off">
-                <span class="focus-border"></span>
+        <form id="signup-form" class="reg-form" novalidate>
+            <div class="reg-field-group">
+                <label for="signup-user" class="reg-label">Username</label>
+                <input type="text" id="signup-user" class="reg-input" autocomplete="off" required>
             </div>
 
-            <div class="input-group">
-                <label for="reg-email">Email Address</label>
-                <input type="email" id="reg-email" name="email" required autocomplete="off">
-                <span class="focus-border"></span>
+            <div class="reg-field-group">
+                <label for="signup-email" class="reg-label">Email Address</label>
+                <input type="email" id="signup-email" class="reg-input" autocomplete="off" required>
             </div>
 
-            <div class="input-group double-group">
-                <div>
-                    <label for="reg-pass">Password</label>
-                    <input type="password" id="reg-pass" name="password" required>
+            <div class="reg-row-group">
+                <div class="reg-field-group">
+                    <label for="signup-pass" class="reg-label">Password</label>
+                    <input type="password" id="signup-pass" class="reg-input" autocomplete="new-password" required>
                 </div>
-                <div>
-                    <label for="reg-pass-confirm">Confirm</label>
-                    <input type="password" id="reg-pass-confirm" name="confirm_password" required>
+                <div class="reg-field-group">
+                    <label for="signup-confirm" class="reg-label">Confirm Password</label>
+                    <input type="password" id="signup-confirm" class="reg-input" autocomplete="new-password" required>
                 </div>
             </div>
+
+            <div class="reg-checkbox-group">
+                <input type="checkbox" id="signup-terms" class="reg-checkbox" required>
+                <label for="signup-terms" class="reg-checkbox-label">I agree to the <span class="reg-highlight">Terms & Conditions</span></label>
+            </div>
+
+            <button type="submit" class="reg-submit-btn">START GAME</button>
             
-            <div class="terms-checkbox">
-                <input type="checkbox" id="terms" required>
-                <label for="terms">I agree to the <a href="#">Terms & Conditions</a></label>
-            </div>
-
-            <button type="submit" class="btn-register">START GAME</button>
+            <div id="signup-feedback" class="reg-status-message"></div>
         </form>
 
-        <div class="register-footer">
-            <p>Already have an account? <a href="#" onclick="loadPage('login'); return false;">Login here</a></p>
+        <div class="reg-footer">
+            <p>Already a member? <a href="#" class="reg-login-link" onclick="loadPage('login'); return false;">Login here</a></p>
         </div>
     </div>
 </div>

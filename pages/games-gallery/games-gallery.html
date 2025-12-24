@@ -1,60 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Game Studio</title>
-    <link rel="stylesheet" href="games-gallery.css">
-</head>
-<body>
+<div class="gallery-full-wrapper">
+    <h1 class="gallery-main-title">GAMES EXPLORER</h1>
 
-<section class="news-section">
+    <div class="gallery-list-container">
+        
+        <div class="game-wide-item">
+            <div class="game-item-preview">
+                <img src="resources/images/flightSim.jpg" alt="Pong Arena">
+            </div>
+            <div class="game-item-info">
+                <h2 class="game-item-name">Pong Arena</h2>
+                <p class="game-item-desc">Experience the classic arcade battle. Defeat the AI in a high-speed match of precision and reflexes. First to 10 wins!</p>
+                <button class="game-item-btn" onclick="launchGame('pong')">LAUNCH GAME</button>
+            </div>
+        </div>
 
-    <!-- Card 1 -->
-    <div class="news-card">
-        <div class="news-text">
-            <h2>Lessmore joins Miniclip</h2>
-            <p>
-                Innovative game concepts and hit casual titles such as
-                Eatventures and We Are Warriors further expand Miniclip's
-                presence into new categories.
-            </p>
-            <button>SEE MORE</button>
+        <div class="game-wide-item">
+            <div class="game-item-preview">
+                <img src="resources/images/mario.jpg" alt="Memory Game">
+            </div>
+            <div class="game-item-info">
+                <h2 class="game-item-name">Memory Matrix</h2>
+                <p class="game-item-desc">Challenge your brain and find all the matching pairs in the shortest time possible. Simple, fun, and addictive.</p>
+                <button class="game-item-btn" onclick="launchGame('memory')">LAUNCH GAME</button>
+            </div>
         </div>
-        <div class="news-image">
-            <img src="https://via.placeholder.com/600x350" alt="News Image">
+
+        <div class="game-wide-item item-locked">
+            <div class="game-item-preview">
+                <img src="resources/images/needForspeed.jpg" alt="Racing Game">
+            </div>
+            <div class="game-item-info">
+                <h2 class="game-item-name">Neon Racer</h2>
+                <p class="game-item-desc">Experience high-speed racing through futuristic city streets. Currently under development.</p>
+                <button class="game-item-btn" disabled>COMING SOON</button>
+            </div>
         </div>
+
+        <div class="game-wide-item item-locked">
+            <div class="game-item-preview">
+                <img src="resources/images/callOfDuty.jpg" alt="FPS Game">
+            </div>
+            <div class="game-item-info">
+                <h2 class="game-item-name">Tactical Ops</h2>
+                <p class="game-item-desc">Coordinate with your team and complete high-risk missions in this tactical simulation. Locked.</p>
+                <button class="game-item-btn" disabled>LOCKED</button>
+            </div>
+        </div>
+
     </div>
-
-    <!-- Card 2 -->
-    <div class="news-card reverse">
-        <div class="news-image">
-            <img src="https://via.placeholder.com/600x350" alt="Award Image">
-        </div>
-        <div class="news-text">
-            <h2>'Best Mobile Publisher' Winner</h2>
-            <p>
-                Miniclip wins 'Best Mobile Publisher' at the
-                Pocket Gamer Awards 2024.
-            </p>
-            <button>SEE MORE</button>
-        </div>
-    </div>
- <!-- Card 3 -->
-    <div class="news-card">
-        <div class="news-text">
-            <h2>Lessmore joins Miniclip</h2>
-            <p>
-                Innovative game concepts and hit casual titles such as
-                Eatventures and We Are Warriors further expand Miniclip's
-                presence into new categories.
-            </p>
-            <button>SEE MORE</button>
-        </div>
-        <div class="news-image">
-            <img src="https://via.placeholder.com/600x350" alt="News Image">
-        </div>
-    </div>
-</section>
-
-</body>
-</html>
+</div>

@@ -1,61 +1,72 @@
+function initRegistration() {
+    const signupForm = document.getElementById("signup-form");
+    if (!signupForm) return;
 
-function initRegister() {
-    const registerForm = document.querySelector(".register-form");
-    if (!registerForm) return;
-
-    registerForm.addEventListener("submit", function(event) {
-        event.preventDefault();
-
-        const username = document.getElementById("reg-username").value.trim();
-        const email = document.getElementById("reg-email").value.trim();
-        const password = document.getElementById("reg-pass").value;
-        const confirmPassword = document.getElementById("reg-pass-confirm").value;
-        const termsCheckbox = document.getElementById("terms");
-
-        // --- בדיקות תקינות (אותו דבר כמו מקודם) ---
-        if (password !== confirmPassword) {
-            alert("הסיסמאות אינן תואמות!");
-            return;
-        }
-        if (!termsCheckbox.checked) {
-            alert("חובה לאשר את התקנון");
-            return;
-        }
-
-        const users = JSON.parse(localStorage.getItem("users")) || [];
-        if (users.find(u => u.username === username)) {
-            alert("שם המשתמש תפוס");
-            return;
-        }
-
-        // --- יצירת המשתמש ---
-        const newUser = {
-            username: username,
-            email: email,
-            password: password,
-            attempts: 0,
-            blockedUntil: null,
-            lastLogin: new Date().toISOString() // מעדכנים שנכנס הרגע
-        };
-
-        users.push(newUser);
-        localStorage.setItem("users", JSON.stringify(users));
-
-        // --- כאן השינוי: כניסה אוטומטית ---
-        
-        // 1. שומרים את הקוקי (בדיוק כמו בלוגין)
-        // הערה: וודא שהפונקציה setCookie זמינה בקובץ הזה!
-        setCookie("loggedUser", username, 1); 
-
-        // 2. הודעה קצרה ומעבר למשחק
-        alert("נרשמת בהצלחה! מתחילים...");
-        loadPage("games-gallery"); 
-    });
+    signupForm.addEventListener("submit", processRegistration);
 }
 
-initRegister();
-// תוסיף את זה מחוץ ל-initRegister אם זה לא קיים כבר
-function setCookie(name, value, hours) {
-  const expires = new Date(Date.now() + hours * 3600000).toUTCString();
-  document.cookie = `${name}=${value}; expires=${expires}; path=/`;
+function processRegistration(event) {
+    event.preventDefault();
+
+    const usernameInput = document.getElementById("signup-user");
+    const emailInput = document.getElementById("signup-email");
+    const passInput = document.getElementById("signup-pass");
+    const confirmInput = document.getElementById("signup-confirm");
+    const termsCheck = document.getElementById("signup-terms");
+    const feedbackBox = document.getElementById("signup-feedback");
+
+    const username = usernameInput.value.trim();
+    const email = emailInput.value.trim();
+    const password = passInput.value;
+    const confirmPass = confirmInput.value;
+
+    if (!username || !email || !password || !confirmPass) {
+        setRegMessage(feedbackBox, "All fields are required", "reg-error");
+        return;
+    }
+
+    if (password !== confirmPass) {
+        setRegMessage(feedbackBox, "Passwords do not match", "reg-error");
+        return;
+    }
+
+    if (!termsCheck.checked) {
+        setRegMessage(feedbackBox, "You must accept the terms", "reg-error");
+        return;
+    }
+
+    const currentUsers = JSON.parse(localStorage.getItem("users")) || [];
+    
+    const userExists = currentUsers.some(u => u.username === username);
+    if (userExists) {
+        setRegMessage(feedbackBox, "Username is already taken", "reg-error");
+        return;
+    }
+
+    const newUserObj = {
+        username: username,
+        email: email,
+        password: password,
+        attempts: 0,
+        blockedUntil: null,
+        lastLogin: new Date().toISOString()
+    };
+
+    currentUsers.push(newUserObj);
+    localStorage.setItem("users", JSON.stringify(currentUsers));
+
+    document.cookie = `loggedUser=${username}; path=/; max-age=3600`;
+
+    setRegMessage(feedbackBox, "Registration Successful! Redirecting...", "reg-success");
+
+    setTimeout(() => {
+        loadPage("games-gallery");
+    }, 1500);
 }
+
+function setRegMessage(element, text, className) {
+    element.textContent = text;
+    element.className = `reg-status-message ${className}`;
+}
+
+initRegistration();

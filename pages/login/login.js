@@ -1,60 +1,73 @@
-function handleLogin(event) {
-  event.preventDefault();
+function initLoginProcess() {
+    const loginForm = document.getElementById("login-entry-form");
+    if (!loginForm) return;
 
-  const username = document.getElementById("login-username").value.trim();
-  const password = document.getElementById("login-password").value;
-  const errorBox = document.getElementById("login-error");
+    loginForm.addEventListener("submit", executeLogin);
+}
 
-  const users = JSON.parse(localStorage.getItem("users")) || [];
-  const user = users.find(u => u.username === username);
+function executeLogin(event) {
+    event.preventDefault();
 
-  if (!user) return showError(errorBox, "User does not exist");
+    const usernameInput = document.getElementById("user-login-id");
+    const passwordInput = document.getElementById("user-login-pass");
+    const feedbackBox = document.getElementById("login-feedback-msg");
 
-  if (user.blockedUntil && Date.now() < user.blockedUntil) {
-    const minutesLeft = Math.ceil((user.blockedUntil - Date.now()) / 60000);
-    return showError(errorBox, `User is blocked for ${minutesLeft} more minutes`);
-  }
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value;
 
-  if (user.password !== password) {
-    user.attempts = (user.attempts || 0) + 1;
-
-    if (user.attempts >= 3) {
-      user.blockedUntil = Date.now() + 5 * 60 * 1000; 
-      user.attempts = 0;
-      saveUsers(users);
-      return showError(errorBox, "You are blocked for 5 minutes");
+    if (!username || !password) {
+        updateLoginStatus(feedbackBox, "Please enter both username and password");
+        return;
     }
 
-    saveUsers(users);
-    return showError(errorBox, "Wrong password");
-  }
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const user = users.find(u => u.username === username);
 
-  user.attempts = 0;
-  user.blockedUntil = null;
-  user.lastLogin = new Date().toISOString();
+    if (!user) {
+        updateLoginStatus(feedbackBox, "Account not found");
+        return;
+    }
 
-  saveUsers(users);
-  setCookie("loggedUser", username, 1);
+    if (user.blockedUntil && Date.now() < user.blockedUntil) {
+        const remainingMinutes = Math.ceil((user.blockedUntil - Date.now()) / 60000);
+        updateLoginStatus(feedbackBox, `Account locked. Wait ${remainingMinutes}m`);
+        return;
+    }
 
-  loadPage("games-gallery");
+    if (user.password !== password) {
+        user.attempts = (user.attempts || 0) + 1;
+
+        if (user.attempts >= 3) {
+            user.blockedUntil = Date.now() + 5 * 60 * 1000;
+            user.attempts = 0;
+            localStorage.setItem("users", JSON.stringify(users));
+            updateLoginStatus(feedbackBox, "Max attempts reached. Locked for 5m");
+            return;
+        }
+
+        localStorage.setItem("users", JSON.stringify(users));
+        updateLoginStatus(feedbackBox, "Invalid credentials");
+        return;
+    }
+
+    user.attempts = 0;
+    user.blockedUntil = null;
+    user.lastLogin = new Date().toISOString();
+    localStorage.setItem("users", JSON.stringify(users));
+
+    document.cookie = `loggedUser=${username}; path=/; max-age=3600`;
+
+    loadPage("games-gallery");
 }
 
-function showError(errorBox, message) {
-  errorBox.textContent = message;
+function updateLoginStatus(element, message) {
+    element.textContent = message;
+    element.className = "login-status-text login-error-state";
+    
+    setTimeout(() => {
+        element.textContent = "";
+        element.className = "login-status-text";
+    }, 3000);
 }
 
-function saveUsers(users) {
-  localStorage.setItem("users", JSON.stringify(users));
-}
-
-function setCookie(name, value, hours) {
-  const expires = new Date(Date.now() + hours * 3600000).toUTCString();
-  document.cookie = `${name}=${value}; expires=${expires}; path=/`;
-}
-
-function initLogin() {
-  const form = document.getElementById("loginForm");
-  form.addEventListener("submit", handleLogin);
-}
-
-initLogin();
+initLoginProcess();

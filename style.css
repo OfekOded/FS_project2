@@ -1,24 +1,30 @@
 :root {
-    --bg-primary: #0B0E14;     
-    --bg-secondary: #c81212;   
+    --bg-primary: #0B0E14;
+    --bg-secondary: #1A1F2B;
+    --bg-card: #151922;
 
-    --text-primary: #EAEAF0;   
-    --text-secondary: #9CA3AF; 
+    --text-primary: #EAEAF0;
+    --text-secondary: #9CA3AF;
+    --text-muted: #6B7280;
 
-    --accent-blue: #00E5FF;    
-    --accent-purple: #8B5CF6; 
-    --accent-pink: #FF2E88;   
-
-    --success: #00FF9C;       
-    --warning: #FFC857;       
-    --error: #FF3B3B;         
+    --accent-blue: #00E5FF;
+    --accent-purple: #8B5CF6;
+    --accent-pink: #FF2E88;
 
     --gradient-primary: linear-gradient(135deg, #00E5FF, #8B5CF6);
-    --gradient-secondary: linear-gradient(135deg, #FF2E88, #8B5CF6);
+    --gradient-glow: linear-gradient(135deg, rgba(0, 229, 255, 0.2), rgba(139, 92, 246, 0.2));
 
-    --glow-blue: 0 0 15px rgba(0, 229, 255, 0.6);
-    --glow-purple: 0 0 15px rgba(139, 92, 246, 0.6);
-    --glow-pink: 0 0 15px rgba(255, 46, 136, 0.6);
+    --status-success: #00FF9C;
+    --status-warning: #FFC857;
+    --status-error: #FF3B3B;
+
+    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-glow-blue: 0 0 20px rgba(0, 229, 255, 0.15);
+    --shadow-glow-purple: 0 0 20px rgba(139, 92, 246, 0.15);
+
+    --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --radius-md: 12px;
+    --transition-fast: 0.3s ease;
 }
 
 * {
@@ -28,8 +34,33 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-color);
+    font-family: var(--font-main);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
     line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+#content-placeholder {
+    width: 100%;       
+    margin: 0;         
+    padding: 0;       
+    flex: 1;           
+    display: flex;    
+    flex-direction: column;
+}
+
+button {
+    cursor: pointer;
+    font-family: inherit;
+    border: none;
+    outline: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
 }

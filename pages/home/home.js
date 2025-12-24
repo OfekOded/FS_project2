@@ -1,5 +1,5 @@
 function initHome(){
-        loadComponent("carousel-container", "components/carousel", "carousel");
+    loadComponent("carousel-container", "components/carousel", "carousel");
 }
 
 initHome();

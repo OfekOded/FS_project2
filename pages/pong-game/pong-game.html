@@ -1,0 +1,26 @@
+<div class="pong-wrapper">
+    <div class="pong-header">
+        <h1 class="pong-title">PONG <span class="highlight">ARENA</span></h1>
+        <div class="pong-difficulty">
+            <button onclick="setPongDifficulty(4)" class="pong-diff-btn">EASY</button>
+            <button onclick="setPongDifficulty(7)" class="pong-diff-btn">MEDIUM</button>
+            <button onclick="setPongDifficulty(11)" class="pong-diff-btn">HARD</button>
+        </div>
+    </div>
+
+    <div class="pong-scoreboard">
+        <div class="pong-score">PLAYER: <span id="pong-player-score">0</span></div>
+        <div class="pong-score">AI: <span id="pong-ai-score">0</span></div>
+    </div>
+
+    <div id="pong-board" class="pong-board">
+        <div id="pong-ball" class="pong-ball"></div>
+        <div id="pong-paddle-left" class="pong-paddle"></div>
+        <div id="pong-paddle-right" class="pong-paddle"></div>
+    </div>
+
+    <div class="pong-controls">
+        <button id="pong-start-btn" class="game-item-btn">START MATCH</button>
+        <button onclick="loadPage('games-gallery')" class="game-item-btn secondary">BACK</button>
+    </div>
+</div>

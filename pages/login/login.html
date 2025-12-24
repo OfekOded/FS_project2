@@ -1,29 +1,26 @@
-<div class="auth-container">
-    <div class="auth-card">
+<div class="login-wrapper">
+    <div class="login-panel">
+        <h1 class="login-main-title">WELCOME BACK</h1>
         
-        <h1 class="auth-title">LOGIN</h1>
-
-        <form id="loginForm" novalidate>
-            <div class="field">
-                <label for="login-username">Username</label>
-                <input id="login-username" type="text" required autocomplete="off">
+        <form id="login-entry-form" novalidate>
+            <div class="login-field-container">
+                <label for="user-login-id" class="login-label">Username</label>
+                <input id="user-login-id" class="login-input" type="text" required autocomplete="username">
             </div>
 
-            <div class="field">
-                <label for="login-password">Password</label>
-                <input id="login-password" type="password" required>
+            <div class="login-field-container">
+                <label for="user-login-pass" class="login-label">Password</label>
+                <input id="user-login-pass" class="login-input" type="password" required autocomplete="current-password">
             </div>
 
-            <button class="btn-primary" type="submit">
-                LOGIN
-            </button>
-
-            <p id="login-error" class="error"></p>
+            <button class="login-action-btn" type="submit">ENTER SYSTEM</button>
+            
+            <div id="login-feedback-msg" class="login-status-text"></div>
         </form>
 
-        <p class="auth-footer">
-            Don't have an account?
-            <a href="#" onclick="loadPage('register'); return false;">Register</a>
-        </p>
+        <div class="login-footer-area">
+            <span class="login-footer-text">New here?</span>
+            <a href="#" class="login-register-link" onclick="loadPage('register'); return false;">Create Account</a>
+        </div>
     </div>
 </div>

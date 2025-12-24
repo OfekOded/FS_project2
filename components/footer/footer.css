@@ -20,7 +20,7 @@
         var(--accent-blue) 80%, 
         transparent 100%
     );
-    box-shadow: 0 0 15px var(--accent-purple);
+    box-shadow: var(--shadow-glow-purple);
 }
 
 .footer-content {
@@ -45,7 +45,7 @@
 
 .footer-logo .highlight {
     color: var(--accent-purple);
-    text-shadow: var(--glow-purple);
+    text-shadow: var(--shadow-glow-purple);
 }
 
 .footer-brand p {
@@ -71,7 +71,7 @@
     align-items: center;
     justify-content: center;
     color: var(--text-secondary);
-    transition: all 0.3s ease;
+    transition: var(--transition-fast);
     border: 1px solid transparent;
 }
 
@@ -86,7 +86,7 @@
     color: var(--accent-blue);
     border-color: var(--accent-blue);
     transform: translateY(-3px);
-    box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+    box-shadow: var(--shadow-glow-blue);
 }
 
 .footer-links-group {
@@ -97,7 +97,7 @@
 }
 
 .footer-column h3 {
-    color: white;
+    color: var(--text-primary);
     font-size: 1rem;
     margin-bottom: 20px;
     text-transform: uppercase;
@@ -119,25 +119,25 @@
     color: var(--text-secondary);
     text-decoration: none;
     font-size: 0.9rem;
-    transition: all 0.3s ease;
+    transition: var(--transition-fast);
     display: inline-block;
 }
 
 .footer-column a:hover {
     color: var(--accent-blue);
     transform: translateX(5px);
-    text-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+    text-shadow: var(--shadow-glow-blue);
 }
 
 .footer-bottom {
-    background-color: #05070a;
+    background-color: var(--bg-card);
     padding: 20px;
     text-align: center;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .footer-bottom p {
-    color: #555;
+    color: var(--text-muted);
     font-size: 0.8rem;
     margin: 0;
 }
