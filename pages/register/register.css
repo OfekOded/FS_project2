@@ -66,14 +66,10 @@
 .reg-field-group {
     display: flex;
     flex-direction: column;
+    
 }
 
-.reg-row-group {
-    display: flex;
-    gap: 15px;
-}
-
-.reg-row-group .reg-field-group {
+.reg-field-group {
     flex: 1;
 }
 
