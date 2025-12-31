@@ -1,63 +1,96 @@
+/* Layout Wrapper (Same as Pong) */
 .wam-container {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 40px 20px;
-    cursor: none;
+    padding: 30px 0;
+    cursor: none; /* מסתיר את העכבר כדי להראות את הפטיש */
 }
 
-.wam-main-title {
-    font-size: 2.5rem;
-    font-weight: 900;
-    margin-bottom: 20px;
-    color: var(--text-primary);
-}
-
-.wam-controls {
+/* Header & Title */
+.wam-header {
+    text-align: center;
     margin-bottom: 20px;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 15px;
 }
 
-.wam-select {
-    padding: 10px;
-    background: var(--bg-card);
-    color: white;
-    border: 1px solid var(--accent-blue);
-    border-radius: 8px;
-    outline: none;
+.wam-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin: 0;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
-.wam-stats-bar {
+/* Difficulty Buttons (Same style as Pong) */
+.wam-difficulty {
     display: flex;
-    gap: 30px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: var(--accent-blue);
-    margin-bottom: 30px;
+    gap: 10px;
+    justify-content: center;
 }
 
+.wam-diff-btn {
+    padding: 8px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--accent-blue);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.wam-diff-btn:hover, .wam-diff-btn.active {
+    background: var(--accent-blue);
+    color: #000;
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
+}
+
+/* Stats Bar */
+.wam-stats-bar {
+    width: 80%;
+    max-width: 600px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 0 20px;
+    font-weight: 800;
+    color: var(--accent-purple);
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Game Area Grid */
 .wam-game-area {
     display: grid;
-    grid-template-columns: repeat(3, 120px);
+    grid-template-columns: repeat(3, 110px);
     gap: 20px;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: #05070a; /* Dark background like Pong */
+    padding: 30px;
+    border-radius: 8px;
+    border: 2px solid #2d3748;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
 }
 
+/* Holes & Moles */
 .wam-hole {
-    width: 120px;
-    height: 120px;
+    width: 110px;
+    height: 110px;
     background: #1e293b;
     border-radius: 50%;
     position: relative;
     overflow: hidden;
     box-shadow: inset 0 0 15px #000;
-    border: 2px solid #2d3748;
+    border: 3px solid #2d3748;
 }
 
 .wam-mole {
@@ -65,15 +98,16 @@
     bottom: -100%;
     left: 50%;
     transform: translateX(-50%);
-    width: 85px;
-    height: 85px;
+    width: 80px;
+    height: 80px;
     background: radial-gradient(circle, #a16207, #713f12);
     border-radius: 50%;
-    transition: bottom 0.15s ease;
+    transition: bottom 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* קפיצה חלקה */
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 50px;
+    font-size: 45px;
+    cursor: pointer;
 }
 
 .wam-mole::after {
@@ -81,9 +115,10 @@
 }
 
 .wam-mole.up {
-    bottom: 10px;
+    bottom: 5px;
 }
 
+/* Hammer & Actions */
 #wam-hammer {
     position: fixed;
     font-size: 60px;
@@ -99,9 +134,12 @@
 }
 
 #wam-hammer.hit {
-    transform: translate(-50%, -50%) rotate(-40deg) scale(1.2);
+    transform: translate(-50%, -50%) rotate(-40deg) scale(0.8);
 }
 
-.wam-footer-actions {
-    margin-top: 40px;
+.wam-controls {
+    margin-top: 30px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
 }

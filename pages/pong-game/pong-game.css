@@ -1,89 +1,115 @@
+/* --- Shared Game Layout (Pong Style) --- */
 .pong-wrapper {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 40px 0;
+    padding: 30px 0;
 }
 
 .pong-header {
     text-align: center;
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
 }
 
+.pong-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin: 0;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Difficulty Buttons Row */
 .pong-difficulty {
-    margin-top: 15px;
     display: flex;
     gap: 10px;
+    justify-content: center;
 }
 
 .pong-diff-btn {
-    padding: 5px 15px;
-    background: #1A1F2B;
+    padding: 8px 20px;
+    background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--accent-blue);
-    color: white;
-    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
     cursor: pointer;
     border-radius: 4px;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    font-weight: 600;
 }
 
-.pong-diff-btn:hover {
+.pong-diff-btn:hover, .pong-diff-btn.active {
     background: var(--accent-blue);
-    color: black;
+    color: #000;
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
 }
 
+/* Stats / Scoreboard */
 .pong-scoreboard {
     width: 80%;
     max-width: 800px;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    padding: 0 20px;
     font-weight: 800;
     color: var(--accent-purple);
-    font-size: 1.5rem;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
+/* Game Board */
 .pong-board {
-    width: 80%;
-    max-width: 800px;
-    height: 400px;
+    width: 95%; /* Responsive width */
+    max-width: 1000px; /* Increased from 800px */
+    height: 600px; /* Increased from 400px */
     background-color: #05070a;
-    border: 4px solid #2d3748;
+    border: 2px solid #2d3748;
     position: relative;
     overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
 }
 
+/* Game Elements */
 .pong-ball {
-    width: 15px;
-    height: 15px;
+    width: 16px;
+    height: 16px;
     background-color: var(--accent-blue);
-    box-shadow: var(--shadow-glow-blue);
+    box-shadow: 0 0 15px var(--accent-blue);
     position: absolute;
     border-radius: 50%;
     top: 50%;
     left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .pong-paddle {
     width: 12px;
     height: 80px;
-    background-color: white;
+    background-color: #EAEAF0;
     position: absolute;
     top: 160px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
-#pong-paddle-left {
-    left: 10px;
-    background: var(--accent-purple);
-}
+#pong-paddle-left { left: 15px; background: var(--accent-purple); }
+#pong-paddle-right { right: 15px; background: var(--accent-blue); }
 
-#pong-paddle-right {
-    right: 10px;
-    background: var(--accent-blue);
-}
-
+/* Bottom Controls */
 .pong-controls {
     margin-top: 30px;
     display: flex;
     gap: 20px;
+    width: 100%;
+    justify-content: center;
 }

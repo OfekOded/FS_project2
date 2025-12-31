@@ -1,28 +1,25 @@
-<div class="wam-container">
-    <div class="wam-header">
-        <h1 class="wam-main-title">🔨 WHACK-A-<span class="highlight">MOLE</span></h1>
+<div class="wam-container"> <div class="wam-header">
+        <h1 class="wam-title">WHACK-A-<span class="highlight">MOLE</span></h1>
         
-        <div class="wam-controls">
-            <select id="wam-difficulty" class="wam-select" aria-label="Select Difficulty">
-                <option value="easy">Easy</option>
-                <option value="medium">Medium</option>
-                <option value="hard">Hard</option>
-            </select>
-            <button id="wam-start-btn" class="game-item-btn">START GAME</button>
+        <div class="wam-difficulty">
+            <button onclick="setWhackDifficulty('easy', this)" class="wam-diff-btn active">EASY</button>
+            <button onclick="setWhackDifficulty('medium', this)" class="wam-diff-btn">MEDIUM</button>
+            <button onclick="setWhackDifficulty('hard', this)" class="wam-diff-btn">HARD</button>
         </div>
+    </div>
 
-        <div class="wam-stats-bar">
-            <span>⏱️ Time: <span id="wam-time">0</span>s</span>
-            <span>⭐ Score: <span id="wam-score">0</span></span>
-            <span>🏆 Best: <span id="wam-best">0</span></span>
-        </div>
+    <div class="wam-stats-bar">
+        <span>TIME: <span id="wam-time">0</span>s</span>
+        <span>SCORE: <span id="wam-score">0</span></span>
+        <span>BEST: <span id="wam-best">0</span></span>
     </div>
 
     <div class="wam-game-area" id="wam-board"></div>
 
     <div id="wam-hammer">🔨</div>
     
-    <div class="wam-footer-actions">
-        <button onclick="loadPage('games-gallery')" class="game-item-btn secondary">BACK TO GALLERY</button>
+    <div class="wam-controls">
+        <button id="wam-start-btn" class="game-item-btn">START MATCH</button>
+        <button onclick="loadPage('games-gallery')" class="game-item-btn secondary">BACK</button>
     </div>
 </div>

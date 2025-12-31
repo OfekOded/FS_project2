@@ -2,7 +2,22 @@
     <div class="nav-logo" onclick="loadPage('home')">
         PLAY<span class="highlight">GAME</span>
     </div>
-    <ul class="nav-links">
-        <li><button onclick="loadPage('register')">Register</button></li>
+
+    <ul class="nav-links" id="nav-guest">
+        <li><button onclick="loadPage('login')">Login</button></li>
     </ul>
+
+    <div class="nav-user-panel" id="nav-user" style="display: none;">
+        <div class="user-info">
+            <div class="user-avatar">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                </svg>
+            </div>
+            <span class="user-greeting">
+                Hello, <span id="nav-username" class="highlight">Commander</span>
+            </span>
+        </div>
+        <button onclick="handleLogout()" class="btn-logout">LOGOUT</button>
+    </div>
 </nav>

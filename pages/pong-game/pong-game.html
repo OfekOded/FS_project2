@@ -2,15 +2,15 @@
     <div class="pong-header">
         <h1 class="pong-title">PONG <span class="highlight">ARENA</span></h1>
         <div class="pong-difficulty">
-            <button onclick="setPongDifficulty(4)" class="pong-diff-btn">EASY</button>
-            <button onclick="setPongDifficulty(7)" class="pong-diff-btn">MEDIUM</button>
-            <button onclick="setPongDifficulty(11)" class="pong-diff-btn">HARD</button>
+            <button onclick="setPongDifficulty(3, 100)" class="pong-diff-btn">EASY</button>
+            <button onclick="setPongDifficulty(5, 80)" class="pong-diff-btn">MEDIUM</button>
+            <button onclick="setPongDifficulty(7, 60)" class="pong-diff-btn">HARD</button>
         </div>
     </div>
 
     <div class="pong-scoreboard">
-        <div class="pong-score">PLAYER: <span id="pong-player-score">0</span></div>
-        <div class="pong-score">AI: <span id="pong-ai-score">0</span></div>
+        <div class="pong-score">P1 (W/S): <span id="pong-player1-score">0</span></div>
+        <div class="pong-score">P2 (Arrows): <span id="pong-player2-score">0</span></div>
     </div>
 
     <div id="pong-board" class="pong-board">

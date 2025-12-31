@@ -5,12 +5,12 @@ function launchGame(gameId) {
         loadPage('whack-a-mole');
     }
 
-    loadComponent("navbar-container", "components/regnavbar", "regnavbar")
+    loadComponent("navbar-container", "components/navbar", "navbar")
     
 
 }
 function initGamesGallery() {
-    loadComponent("navbar-container", "components/regnavbar", "regnavbar")
+    loadComponent("navbar-container", "components/navbar", "navbar")
  
 }
 initGamesGallery();
