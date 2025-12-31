@@ -1,6 +1,21 @@
 function initNavbar() {
     checkLoginStatus();
     window.addEventListener('userLoginStateChanged', checkLoginStatus);
+
+    const logoBtn = document.getElementById('nav-logo-btn');
+    if (logoBtn) {
+        logoBtn.addEventListener('click', handleLogoClick);
+    }
+}
+
+function handleLogoClick() {
+    const loggedUser = getCookie("loggedUser");
+    
+    if (loggedUser) {
+        loadPage('games-gallery');
+    } else {
+        loadPage('home');
+    }
 }
 
 function checkLoginStatus() {
