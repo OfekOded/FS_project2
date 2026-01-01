@@ -1,9 +1,11 @@
+// בעת טעינת הדף – טוען את פרופיל המשתמש המחובר
 document.addEventListener("DOMContentLoaded", loadUserProfile);
 
+// טוען נתוני משתמש מה-cookie וה-localStorage ומציג פרופיל, הישגים ודירוג
 function loadUserProfile() {
     const loggedUser = getCookie("loggedUser");
     if (!loggedUser) {
-        window.location.replace("/home.html"); 
+        window.location.replace("/home.html");
         return;
     }
 
@@ -11,102 +13,89 @@ function loadUserProfile() {
     const currentUser = users.find(u => u.username === loggedUser);
 
     if (currentUser) {
+        // פרטי משתמש בסיסיים
         document.getElementById("profile-username").textContent = currentUser.username;
-        
-        const emailEl = document.getElementById("profile-email");
-        if (emailEl && currentUser.email) {
-            emailEl.textContent = currentUser.email;
-        }
 
+        // הצגת אימייל אם קיים
+        const emailEl = document.getElementById("profile-email");
+        if (emailEl && currentUser.email) emailEl.textContent = currentUser.email;
+
+        // תאריך התחברות אחרון
         if (currentUser.lastLogin) {
             const date = new Date(currentUser.lastLogin);
-            document.getElementById("last-seen-date").textContent = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+            document.getElementById("last-seen-date").textContent =
+                date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
         }
 
+        // חישוב סטטיסטיקות והישגים
         const achievements = currentUser.achievements || {};
         const activities = currentUser.activities || [];
-        
+
         const pongScore = achievements.pongScore || 0;
         const wamScore = achievements.wamScore || 0;
-        const totalCombinedScore = pongScore + wamScore;
-        const totalGamesPlayed = activities.length;
+        const totalScore = pongScore + wamScore;
 
-        document.getElementById("total-games-count").textContent = totalGamesPlayed;
-        document.getElementById("total-score-sum").textContent = totalCombinedScore;
-        
+        document.getElementById("total-games-count").textContent = activities.length;
+        document.getElementById("total-score-sum").textContent = totalScore;
         document.getElementById("best-pong").textContent = pongScore;
         document.getElementById("best-wam").textContent = wamScore;
 
-        const rankElement = document.getElementById("player-rank");
-        if (totalCombinedScore > 200) rankElement.textContent = "LEGEND";
-        else if (totalCombinedScore > 100) rankElement.textContent = "MASTER";
-        else if (totalCombinedScore > 50) rankElement.textContent = "PRO";
-        else if (totalCombinedScore > 20) rankElement.textContent = "PLAYER";
-        else rankElement.textContent = "ROOKIE";
+        // קביעת דרגת שחקן לפי ניקוד
+        const rank = document.getElementById("player-rank");
+        if (totalScore > 200) rank.textContent = "LEGEND";
+        else if (totalScore > 100) rank.textContent = "MASTER";
+        else if (totalScore > 50) rank.textContent = "PRO";
+        else if (totalScore > 20) rank.textContent = "PLAYER";
+        else rank.textContent = "ROOKIE";
 
         renderActivityList(activities);
         renderGlobalLeaderboard(users, loggedUser);
     }
 }
 
+// מציג עד 10 משחקים אחרונים של המשתמש
 function renderActivityList(activities) {
     const list = document.getElementById("activity-list");
-    list.innerHTML = ""; 
+    list.innerHTML = "";
 
-    if (!activities || activities.length === 0) {
-        list.innerHTML = "<li style='color: var(--text-muted); justify-content: center;'>No recent matches found</li>";
+    if (!activities.length) {
+        list.innerHTML = "<li>No recent matches found</li>";
         return;
     }
 
-    const recentActivities = activities.slice().reverse().slice(0, 10);
-
-    recentActivities.forEach(act => {
+    activities.slice().reverse().slice(0, 10).forEach(act => {
         const li = document.createElement("li");
-        const dateObj = new Date(act.date);
-        const dateStr = dateObj.toLocaleDateString();
-        const timeStr = dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-        
+        const d = new Date(act.date);
         li.innerHTML = `
-            <div class="act-meta">
-                <span class="act-name">${act.game}</span>
-                <span class="act-date">${dateStr} | ${timeStr}</span>
-            </div>
-            <span class="act-score">${act.score} PTS</span>
+            <span>${act.game}</span>
+            <span>${d.toLocaleDateString()} ${d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</span>
+            <span>${act.score} PTS</span>
         `;
         list.appendChild(li);
     });
 }
 
+// בונה טבלת דירוג כללית לפי ניקוד מצטבר
 function renderGlobalLeaderboard(users, currentUser) {
     const tbody = document.getElementById("leaderboard-body");
     tbody.innerHTML = "";
 
-    const leaderboardData = users.map(u => {
-        const ach = u.achievements || {};
-        const total = (ach.pongScore || 0) + (ach.wamScore || 0);
-        return { username: u.username, totalScore: total };
-    });
-
-    leaderboardData.sort((a, b) => b.totalScore - a.totalScore);
-
-    leaderboardData.forEach((player, index) => {
-        const tr = document.createElement("tr");
-        if (player.username === currentUser) {
-            tr.classList.add("active-user");
-        }
-
-        tr.innerHTML = `
-            <td><span class="rank-num">#${index + 1}</span></td>
-            <td>${player.username}</td>
-            <td>${player.totalScore}</td>
-        `;
-        tbody.appendChild(tr);
-    });
+    users
+        .map(u => ({
+            username: u.username,
+            total: (u.achievements?.pongScore || 0) + (u.achievements?.wamScore || 0)
+        }))
+        .sort((a, b) => b.total - a.total)
+        .forEach((p, i) => {
+            const tr = document.createElement("tr");
+            if (p.username === currentUser) tr.classList.add("active-user");
+            tr.innerHTML = `<td>#${i + 1}</td><td>${p.username}</td><td>${p.total}</td>`;
+            tbody.appendChild(tr);
+        });
 }
 
+// מחזיר ערך Cookie לפי שם
 function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-    return null;
+    const parts = (`; ${document.cookie}`).split(`; ${name}=`);
+    return parts.length === 2 ? parts.pop().split(';').shift() : null;
 }

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- הגדרות בסיסיות + טעינת עיצוב כללי ועיצוב עמוד פרופיל -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlayGame - Player Profile</title>
@@ -9,22 +10,33 @@
 </head>
 <body>
 
+    <!-- Navbar נטען דינמית -->
     <header id="navbar-container"></header>
 
     <main>
+        <!-- מעטפת עמוד הפרופיל -->
         <div class="profile-wrapper">
+
+            <!-- כרטיס שחקן ראשי -->
             <div class="gamer-card">
+
+                <!-- אזור אוואטר + דרגת שחקן -->
                 <div class="avatar-container">
                     <div class="avatar-circle">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                        <!-- אייקון משתמש -->
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg>
                     </div>
                     <div class="rank-badge" id="player-rank">ROOKIE</div>
                 </div>
-                
+
+                <!-- פרטי משתמש -->
                 <h1 id="profile-username" class="gamer-tag">Loading...</h1>
                 <p id="profile-email" class="gamer-email"></p>
                 <p class="last-seen">Last Seen: <span id="last-seen-date">...</span></p>
 
+                <!-- סטטיסטיקות כלליות -->
                 <div class="stats-row">
                     <div class="stat-box">
                         <span class="stat-label">TOTAL GAMES</span>
@@ -37,7 +49,10 @@
                 </div>
             </div>
 
+            <!-- אזור נתונים מפורטים -->
             <div class="details-grid">
+
+                <!-- שיאים במשחקים -->
                 <div class="section-card">
                     <h3 class="section-title">🏆 BEST RECORDS</h3>
                     <div class="scores-list">
@@ -52,6 +67,7 @@
                     </div>
                 </div>
 
+                <!-- משחקים אחרונים -->
                 <div class="section-card">
                     <h3 class="section-title">🕹️ RECENT MATCHES</h3>
                     <div class="scroll-wrapper">
@@ -59,6 +75,7 @@
                     </div>
                 </div>
 
+                <!-- טבלת דירוג כללית -->
                 <div class="section-card full-width">
                     <h3 class="section-title">🌍 GLOBAL LEADERBOARD</h3>
                     <div class="scroll-wrapper">
@@ -74,14 +91,19 @@
                         </table>
                     </div>
                 </div>
+
             </div>
         </div>
     </main>
 
+    <!-- Footer נטען דינמית -->
     <footer id="footer-container"></footer>
 
+    <!-- סקריפטים: כללי + פרופיל משתמש -->
     <script src="/main.js"></script>
     <script src="profile.js"></script>
+
+    <!-- טעינת Navbar ו-Footer לאחר טעינת הדף -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             loadComponent('navbar-container', '/components/navbar/navbar');
