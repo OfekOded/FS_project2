@@ -1,3 +1,6 @@
+/*
+פונקציית האתחול מוסיפה מאזין לכפתור ההגשה 
+*/
 function initLoginProcess() {
     const loginForm = document.getElementById("login-entry-form");
     if (!loginForm) return;

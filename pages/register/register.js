@@ -1,10 +1,15 @@
+/*
+זו הפונקציה ההתחלתית שמחברת לכפתור את הפונקציה המתאימה ושולפת את טופס ההרשמה מה DOM
+*/
 function initRegistration() {
     const signupForm = document.getElementById("signup-form");
     if (!signupForm) return;
 
     signupForm.addEventListener("submit", processRegistration);
 }
-
+/*
+הפונקציה הזו שולפת את המידע מהטופס בודקת תקינות מוודא שהמשתמש לא קיים כבר ואם הכל בסדר היא שומרת את המשתמש בlocalStorage
+*/
 function processRegistration(event) {
     event.preventDefault();
 

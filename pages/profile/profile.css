@@ -209,3 +209,10 @@
 }
 
 .rank-num { font-weight: bold; color: var(--accent-blue); }
+
+.gamer-email {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    margin-top: -5px;
+}
