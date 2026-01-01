@@ -6,7 +6,8 @@ let pongGameState = {
     p1Score: 0, p2Score: 0,
     paddleHeight: 100,
     gameRunning: false,
-    keys: {}
+    keys: {},
+    winningScore: 3 // הוספנו: משחקים עד 3
 };
 
 function initPongGame() {
@@ -37,7 +38,14 @@ function initPongGame() {
 
 function startPongMatch() {
     if (pongGameState.gameRunning) return;
+    
+    // איפוס ניקוד בתחילת משחק חדש
+    pongGameState.p1Score = 0;
+    pongGameState.p2Score = 0;
+    updateScoreDisplay();
+    
     pongGameState.gameRunning = true;
+    resetPongPosition(); // מתחילים מהאמצע
     requestAnimationFrame(updatePongFrame);
 }
 
@@ -51,10 +59,6 @@ function setPongDifficulty(speed, height) {
     if (pLeft && pRight) {
         pLeft.style.height = height + 'px';
         pRight.style.height = height + 'px';
-    }
-
-    if (!pongGameState.gameRunning) {
-        resetPongPosition();
     }
 }
 
@@ -101,6 +105,7 @@ function updatePongFrame() {
     pongGameState.ballX += pongGameState.ballSpeedX;
     pongGameState.ballY += pongGameState.ballSpeedY;
 
+    // קירות למעלה ולמטה
     if (pongGameState.ballY <= 0) {
         pongGameState.ballY = 0;
         pongGameState.ballSpeedY *= -1;
@@ -109,27 +114,33 @@ function updatePongFrame() {
         pongGameState.ballSpeedY *= -1;
     }
 
+    // פגיעה במחבט שחקן 1
     if (pongGameState.ballX <= 27 && 
         pongGameState.ballY >= pongGameState.p1Y && 
         pongGameState.ballY <= pongGameState.p1Y + pongGameState.paddleHeight) {
         pongGameState.ballSpeedX = Math.abs(pongGameState.baseSpeed);
     }
 
+    // פגיעה במחבט שחקן 2
     if (pongGameState.ballX >= (boardWidth - 43) && 
         pongGameState.ballY >= pongGameState.p2Y && 
         pongGameState.ballY <= pongGameState.p2Y + pongGameState.paddleHeight) {
         pongGameState.ballSpeedX = -Math.abs(pongGameState.baseSpeed);
     }
 
+    // --- בדיקת גולים וניצחון (החלק ששונה) ---
+    
+    // שחקן 2 הבקיע
     if (pongGameState.ballX < 0) {
         pongGameState.p2Score++;
         updateScoreDisplay();
-        endPongPoint();
-    } else if (pongGameState.ballX > boardWidth) {
+        checkWinCondition(); // בדיקה אם נגמר המשחק
+    } 
+    // שחקן 1 הבקיע
+    else if (pongGameState.ballX > boardWidth) {
         pongGameState.p1Score++;
         updateScoreDisplay();
-        savePongAchievement(); 
-        endPongPoint();
+        checkWinCondition(); // בדיקה אם נגמר המשחק
     }
 
     ball.style.left = pongGameState.ballX + 'px';
@@ -142,16 +153,29 @@ function updatePongFrame() {
     }
 }
 
+// פונקציה חדשה: בודקת אם מישהו הגיע ל-3 נקודות
+function checkWinCondition() {
+    if (pongGameState.p1Score >= pongGameState.winningScore || 
+        pongGameState.p2Score >= pongGameState.winningScore) {
+        
+        // המשחק נגמר
+        pongGameState.gameRunning = false;
+        
+        // שמירה להיסטוריה רק אם המשחק נגמר
+        savePongToHistory(); 
+        
+        alert(`Game Over! Score: ${pongGameState.p1Score} - ${pongGameState.p2Score}`);
+    } else {
+        // המשחק ממשיך - רק מאפסים את הכדור
+        resetPongPosition();
+    }
+}
+
 function updateScoreDisplay() {
     const p1Display = document.getElementById('pong-player1-score');
     const p2Display = document.getElementById('pong-player2-score');
     if(p1Display) p1Display.textContent = pongGameState.p1Score;
     if(p2Display) p2Display.textContent = pongGameState.p2Score;
-}
-
-function endPongPoint() {
-    pongGameState.gameRunning = false;
-    resetPongPosition();
 }
 
 function resetPongPosition() {
@@ -169,29 +193,45 @@ function resetPongPosition() {
 
     pongGameState.ballSpeedX = pongGameState.baseSpeed * directionX;
     pongGameState.ballSpeedY = pongGameState.baseSpeed * directionY;
-    
-    const ball = document.getElementById('pong-ball');
-    if (ball) {
-        ball.style.left = pongGameState.ballX + 'px';
-        ball.style.top = pongGameState.ballY + 'px';
-    }
 }
 
-function savePongAchievement() {
-    const name = document.cookie.split('; ').find(row => row.startsWith('loggedUser='))?.split('=')[1];
-    if (!name) return;
+// --- הפונקציה החדשה והחשובה לשמירה בפרופיל ---
+function savePongToHistory() {
+    const loggedUser = document.cookie.split('; ').find(row => row.startsWith('loggedUser='))?.split('=')[1];
+    if (!loggedUser) return;
 
     const users = JSON.parse(localStorage.getItem("users")) || [];
-    const userIndex = users.findIndex(u => u.username === name);
+    const userIndex = users.findIndex(u => u.username === loggedUser);
 
     if (userIndex !== -1) {
-        if (!users[userIndex].achievements) users[userIndex].achievements = {};
+        const user = users[userIndex];
+
+        // --- 1. עדכון שיא אישי (High Score) ---
+        if (!user.achievements) user.achievements = {};
         
-        const currentHighScore = users[userIndex].achievements.pongScore || 0;
-        if (pongGameState.p1Score > currentHighScore) {
-            users[userIndex].achievements.pongScore = pongGameState.p1Score;
-            localStorage.setItem("users", JSON.stringify(users));
+        // נבדוק אם הניקוד הנוכחי גבוה מהשיא הקיים
+        const currentBest = user.achievements.pongScore || 0;
+        if (pongGameState.p1Score > currentBest) {
+            user.achievements.pongScore = pongGameState.p1Score;
         }
+
+        // --- 2. עדכון היסטוריה (Recent Activity) ---
+        if (!user.activities) user.activities = [];
+
+        user.activities.unshift({
+            game: "Pong",
+            score: `${pongGameState.p1Score} - ${pongGameState.p2Score}`,
+            date: new Date().toISOString()
+        });
+
+        // הגבלה ל-5 משחקים אחרונים בלבד
+        if (user.activities.length > 5) {
+            user.activities.pop(); // מוחק את הישן ביותר
+        }
+
+        // שמירה
+        users[userIndex] = user;
+        localStorage.setItem("users", JSON.stringify(users));
     }
 }
 

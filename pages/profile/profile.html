@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="../../style.css"> 
+    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="../../components/navbar/navbar.css">
+</head>
+<body>
+
+    <div id="navbar-placeholder"></div>
+
+    <div class="profile-container">
+        <div class="profile-header">
+            <h1>User Profile</h1>
+            <h2 id="profile-username">Loading...</h2>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Last Login</h3>
+                <p id="last-login">Never</p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Logins</h3>
+                <p id="login-count">0</p>
+            </div>
+        </div>
+
+        <div class="records-section">
+            <h3>All-Time Best Scores</h3>
+            <div class="records-grid">
+                <div class="record-card">
+                    <span>Pong</span>
+                    <span id="best-pong" class="highlight-score">-</span>
+                </div>
+                <div class="record-card">
+                    <span>Whack-a-Mole</span>
+                    <span id="best-wam" class="highlight-score">-</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="activity-section">
+            <h3>Recent Activity (Last 5 Games)</h3>
+            <ul id="activity-list" class="activity-list">
+                </ul>
+        </div>
+    </div>
+
+    <script src="../../components/navbar/navbar.js"></script>
+    <script src="profile.js"></script>
+</body>
+</html>

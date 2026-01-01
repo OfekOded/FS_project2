@@ -79,7 +79,7 @@ function runGameLogic() {
 
             if (gameState.time <= 0) {
                 stopGame();
-                saveScore();
+                saveScore(); // כאן מתבצעת השמירה
                 setTimeout(() => alert(`Time's up! Score: ${gameState.score}`), 100);
             }
         }, 1000);
@@ -126,21 +126,43 @@ function runGameLogic() {
         }
     }
 
-    function saveScore() {
+    // --- זו הפונקציה ששונתה ---
+   function saveScore() {
         const name = document.cookie.split('; ').find(row => row.startsWith('loggedUser='))?.split('=')[1];
         if (!name) return;
+        
         const users = JSON.parse(localStorage.getItem("users")) || [];
         const userIndex = users.findIndex(u => u.username === name);
         
         if (userIndex > -1) {
-            const currentBest = users[userIndex].achievements?.wamScore || 0;
+            const user = users[userIndex];
+
+            // 1. שמירת שיא (High Score)
+            if (!user.achievements) user.achievements = {};
+            
+            const currentBest = user.achievements.wamScore || 0;
             if (gameState.score > currentBest) {
-                if (!users[userIndex].achievements) users[userIndex].achievements = {};
-                users[userIndex].achievements.wamScore = gameState.score;
-                localStorage.setItem("users", JSON.stringify(users));
+                user.achievements.wamScore = gameState.score;
                 const best = document.getElementById("wam-best");
                 if (best) best.textContent = gameState.score;
             }
+
+            // 2. שמירת היסטוריה - הגבלה ל-5
+            if (!user.activities) user.activities = [];
+
+            user.activities.unshift({
+                game: "Whack-a-Mole",
+                score: gameState.score,
+                date: new Date().toISOString()
+            });
+
+            // השינוי: שומרים רק 5 אחרונים
+            if (user.activities.length > 5) {
+                user.activities.pop();
+            }
+
+            users[userIndex] = user;
+            localStorage.setItem("users", JSON.stringify(users));
         }
     }
 
