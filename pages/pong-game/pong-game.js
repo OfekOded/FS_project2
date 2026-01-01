@@ -18,11 +18,10 @@ function initPongGame() {
     pongGameState.gameRunning = false;
     pongGameState.p1Score = 0;
     pongGameState.p2Score = 0;
+    pongGameState.keys = {}; 
     updateScoreDisplay();
 
-    const newStartBtn = startBtn.cloneNode(true);
-    startBtn.parentNode.replaceChild(newStartBtn, startBtn);
-    newStartBtn.addEventListener('click', startPongMatch);
+    startBtn.onclick = startPongMatch;
     
     if (!pongListenersAdded) {
         document.addEventListener('keydown', (e) => {
