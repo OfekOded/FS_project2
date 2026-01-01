@@ -1,9 +1,8 @@
 function initNavbar() {
-    console.log("Navbar initialized!"); // בדיקה בקונסול שזה רץ
+    console.log("Navbar initialized!"); 
 
     checkLoginStatus();
     
-    // לוגו - מוביל לדף הבית או לגלריה
     const logoBtn = document.getElementById('nav-logo-btn');
     if (logoBtn) {
         logoBtn.addEventListener('click', () => {
@@ -16,14 +15,13 @@ function initNavbar() {
         });
     }
 
-    // כפתור התחברות
-    const loginBtn = document.getElementById('nav-login-btn');
-    if (loginBtn) {
-        loginBtn.addEventListener('click', () => {
-            window.location.href = '/pages/login/login.html';
+    const regBtn = document.getElementById('nav-register-btn');
+    if (regBtn) {
+        regBtn.addEventListener('click', () => {
+            window.location.href = '/pages/register/register.html';
         });
     } else {
-        console.error("Login button not found!"); // יעזור לנו לדעת אם האלמנט חסר
+        console.error("Register button not found!"); // יעזור לנו לדעת אם האלמנט חסר
     }
 
     // כפתור התנתקות
