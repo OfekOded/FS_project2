@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlayGame - Whack a Mole</title>
     
-    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="whack-a-mole.css">
 </head>
 <body>
@@ -18,14 +18,14 @@
                 <h1 class="wam-title">WHACK-A-<span class="highlight">MOLE</span></h1>
                 
                 <div class="wam-difficulty">
-                    <button onclick="setWhackDifficulty('easy', this)" class="wam-diff-btn active">EASY</button>
-                    <button onclick="setWhackDifficulty('medium', this)" class="wam-diff-btn">MEDIUM</button>
-                    <button onclick="setWhackDifficulty('hard', this)" class="wam-diff-btn">HARD</button>
+                    <button onclick="setWhackDifficulty(this, 1100, 30)" class="wam-diff-btn active">EASY</button>
+                    <button onclick="setWhackDifficulty(this, 800, 25)" class="wam-diff-btn">MEDIUM</button>
+                    <button onclick="setWhackDifficulty(this, 500, 20)" class="wam-diff-btn">HARD</button>
                 </div>
             </div>
         
             <div class="wam-stats-bar">
-                <span>TIME: <span id="wam-time">0</span>s</span>
+                <span>TIME: <span id="wam-time">30</span>s</span>
                 <span>SCORE: <span id="wam-score">0</span></span>
                 <span>BEST: <span id="wam-best">0</span></span>
             </div>
@@ -36,20 +36,20 @@
             
             <div class="wam-controls">
                 <button id="wam-start-btn" class="game-item-btn">START MATCH</button>
-                <a href="../games-gallery/games-gallery.html" class="game-item-btn secondary" style="text-decoration: none; text-align: center;">BACK</a>
+                <a href="/pages/games-gallery/games-gallery.html" class="game-item-btn secondary" style="text-decoration: none; text-align: center;">BACK</a>
             </div>
         </div>
     </main>
 
     <footer id="footer-container"></footer>
 
-    <script src="../../main.js"></script>
+    <script src="/main.js"></script>
     <script src="whack-a-mole.js"></script>
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            loadComponent('navbar-container', '../../components/navbar/navbar');
-            loadComponent('footer-container', '../../components/footer/footer');
+            loadComponent('navbar-container', '/components/navbar/navbar');
+            loadComponent('footer-container', '/components/footer/footer');
         });
     </script>
 </body>

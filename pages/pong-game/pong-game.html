@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlayGame - Pong Arena</title>
     
-    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="pong-game.css">
 </head>
 <body>
@@ -17,9 +17,9 @@
             <div class="pong-header">
                 <h1 class="pong-title">PONG <span class="highlight">ARENA</span></h1>
                 <div class="pong-difficulty">
-                    <button onclick="setPongDifficulty(3, 100)" class="pong-diff-btn">EASY</button>
-                    <button onclick="setPongDifficulty(5, 80)" class="pong-diff-btn">MEDIUM</button>
-                    <button onclick="setPongDifficulty(7, 60)" class="pong-diff-btn">HARD</button>
+                    <button onclick="setDifficulty(this, 3, 100)" class="pong-diff-btn active">EASY</button>
+                    <button onclick="setDifficulty(this, 5, 80)" class="pong-diff-btn">MEDIUM</button>
+                    <button onclick="setDifficulty(this, 7, 60)" class="pong-diff-btn">HARD</button>
                 </div>
             </div>
         
@@ -36,20 +36,20 @@
         
             <div class="pong-controls">
                 <button id="pong-start-btn" class="game-item-btn">START MATCH</button>
-                <a href="../games-gallery/games-gallery.html" class="game-item-btn secondary">BACK</a>
+                <a href="/pages/games-gallery/games-gallery.html" class="game-item-btn secondary">BACK</a>
             </div>
         </div>
     </main>
 
     <footer id="footer-container"></footer>
 
-    <script src="../../main.js"></script>
+    <script src="/main.js"></script>
     <script src="pong-game.js"></script> 
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            loadComponent('navbar-container', '../../components/navbar/navbar');
-            loadComponent('footer-container', '../../components/footer/footer');
+            loadComponent('navbar-container', '/components/navbar/navbar');
+            loadComponent('footer-container', '/components/footer/footer');
         });
     </script>
 </body>

@@ -1,8 +1,8 @@
 function runGameLogic() {
     let gameState = {
         score: 0,
-        time: 30,
-        speed: 1000,
+        time: 30, // Default start time
+        speed: 1100, // Default speed
         running: false,
         moles: []
     };
@@ -64,7 +64,9 @@ function runGameLogic() {
         gameState.score = 0;
         document.getElementById("wam-score").textContent = "0";
         
-        setDifficulty();
+        // Reset Time Display based on current difficulty
+        const timeDisplay = document.getElementById("wam-time");
+        if (timeDisplay) timeDisplay.textContent = gameState.time;
 
         moleInterval = setInterval(() => {
             gameState.moles.forEach(m => m.classList.remove("up"));
@@ -72,14 +74,14 @@ function runGameLogic() {
             if(randomMole) randomMole.classList.add("up");
         }, gameState.speed);
 
+        let currentTime = gameState.time;
         gameInterval = setInterval(() => {
-            gameState.time--;
-            const timeDisplay = document.getElementById("wam-time");
-            if (timeDisplay) timeDisplay.textContent = gameState.time;
+            currentTime--;
+            if (timeDisplay) timeDisplay.textContent = currentTime;
 
-            if (gameState.time <= 0) {
+            if (currentTime <= 0) {
                 stopGame();
-                saveScore(); // כאן מתבצעת השמירה
+                saveScore(gameState.score);
                 setTimeout(() => alert(`Time's up! Score: ${gameState.score}`), 100);
             }
         }, 1000);
@@ -90,33 +92,34 @@ function runGameLogic() {
         clearInterval(moleInterval);
         gameState.running = false;
         gameState.moles.forEach(m => m.classList.remove("up"));
+        
+        // Reset time display back to setting default
+        const timeDisplay = document.getElementById("wam-time");
+        if (timeDisplay) timeDisplay.textContent = gameState.time;
     }
 
-    function setDifficulty() {
-        const activeBtn = document.querySelector('.wam-diff-btn.active');
-        const level = activeBtn ? activeBtn.textContent.trim().toLowerCase() : 'easy';
+    // New Logic: Matches Pong style
+    window.setWhackDifficulty = (btnElement, speed, time) => {
+        if (gameState.running) return;
         
-        if (level === 'easy') { gameState.speed = 1100; gameState.time = 30; }
-        else if (level === 'medium') { gameState.speed = 800; gameState.time = 25; }
-        else if (level === 'hard') { gameState.speed = 500; gameState.time = 20; }
+        gameState.speed = speed;
+        gameState.time = time;
         
+        // Update UI Visuals
+        document.querySelectorAll('.wam-diff-btn').forEach(b => b.classList.remove('active'));
+        if(btnElement) btnElement.classList.add('active');
+        
+        // Update Time Display immediately
         const tDisplay = document.getElementById("wam-time");
         if(tDisplay) tDisplay.textContent = gameState.time;
-    }
+    };
 
     if (startBtn) {
         startBtn.onclick = startGame;
     }
 
-    window.setWhackDifficulty = (level, btn) => {
-        if (gameState.running) return;
-        document.querySelectorAll('.wam-diff-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        setDifficulty();
-    };
-
     function loadScore() {
-        const name = document.cookie.split('; ').find(row => row.startsWith('loggedUser='))?.split('=')[1];
+        const name = getCookie("loggedUser");
         if (!name) return;
         const users = JSON.parse(localStorage.getItem("users")) || [];
         const user = users.find(u => u.username === name);
@@ -126,9 +129,8 @@ function runGameLogic() {
         }
     }
 
-    // --- זו הפונקציה ששונתה ---
-   function saveScore() {
-        const name = document.cookie.split('; ').find(row => row.startsWith('loggedUser='))?.split('=')[1];
+    function saveScore(finalScore) {
+        const name = getCookie("loggedUser");
         if (!name) return;
         
         const users = JSON.parse(localStorage.getItem("users")) || [];
@@ -137,26 +139,23 @@ function runGameLogic() {
         if (userIndex > -1) {
             const user = users[userIndex];
 
-            // 1. שמירת שיא (High Score)
             if (!user.achievements) user.achievements = {};
             
             const currentBest = user.achievements.wamScore || 0;
-            if (gameState.score > currentBest) {
-                user.achievements.wamScore = gameState.score;
+            if (finalScore > currentBest) {
+                user.achievements.wamScore = finalScore;
                 const best = document.getElementById("wam-best");
-                if (best) best.textContent = gameState.score;
+                if (best) best.textContent = finalScore;
             }
 
-            // 2. שמירת היסטוריה - הגבלה ל-5
             if (!user.activities) user.activities = [];
 
             user.activities.unshift({
                 game: "Whack-a-Mole",
-                score: gameState.score,
+                score: finalScore,
                 date: new Date().toISOString()
             });
 
-            // השינוי: שומרים רק 5 אחרונים
             if (user.activities.length > 5) {
                 user.activities.pop();
             }
@@ -166,9 +165,18 @@ function runGameLogic() {
         }
     }
 
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return null;
+    }
+
     createBoard();
     loadScore();
-    setDifficulty();
+    // Default Init
+    const defaultTimeDisplay = document.getElementById("wam-time");
+    if(defaultTimeDisplay) defaultTimeDisplay.textContent = gameState.time;
 }
 
 runGameLogic();
