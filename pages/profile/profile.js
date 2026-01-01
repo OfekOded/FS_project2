@@ -11,7 +11,6 @@ function loadUserProfile() {
     const currentUser = users.find(u => u.username === loggedUser);
 
     if (currentUser) {
-        // Basic Info
         document.getElementById("profile-username").textContent = currentUser.username;
         
         if (currentUser.lastLogin) {
@@ -19,7 +18,6 @@ function loadUserProfile() {
             document.getElementById("last-seen-date").textContent = date.toLocaleDateString();
         }
 
-        // Extract Data safely
         const achievements = currentUser.achievements || {};
         const activities = currentUser.activities || [];
         
@@ -28,14 +26,12 @@ function loadUserProfile() {
         const totalCombinedScore = pongScore + wamScore;
         const totalGamesPlayed = activities.length;
 
-        // Update Stats DOM
         document.getElementById("total-games-count").textContent = totalGamesPlayed;
         document.getElementById("total-score-sum").textContent = totalCombinedScore;
         
         document.getElementById("best-pong").textContent = pongScore;
         document.getElementById("best-wam").textContent = wamScore;
 
-        // Calculate & Set Rank
         const rankElement = document.getElementById("player-rank");
         if (totalCombinedScore > 100) rankElement.textContent = "LEGEND";
         else if (totalCombinedScore > 50) rankElement.textContent = "MASTER";
@@ -43,8 +39,8 @@ function loadUserProfile() {
         else if (totalCombinedScore > 0) rankElement.textContent = "PLAYER";
         else rankElement.textContent = "ROOKIE";
 
-        // Render Activity List
         renderActivityList(activities);
+        renderGlobalLeaderboard(users, loggedUser);
     }
 }
 
@@ -57,8 +53,7 @@ function renderActivityList(activities) {
         return;
     }
 
-    // Show last 5 games
-    activities.slice(0, 5).forEach(act => {
+    activities.reverse().forEach(act => {
         const li = document.createElement("li");
         const dateStr = new Date(act.date).toLocaleDateString();
         
@@ -70,6 +65,33 @@ function renderActivityList(activities) {
             <span class="act-score">${act.score} PTS</span>
         `;
         list.appendChild(li);
+    });
+}
+
+function renderGlobalLeaderboard(users, currentUser) {
+    const tbody = document.getElementById("leaderboard-body");
+    tbody.innerHTML = "";
+
+    const leaderboardData = users.map(u => {
+        const ach = u.achievements || {};
+        const total = (ach.pongScore || 0) + (ach.wamScore || 0);
+        return { username: u.username, totalScore: total };
+    });
+
+    leaderboardData.sort((a, b) => b.totalScore - a.totalScore);
+
+    leaderboardData.forEach((player, index) => {
+        const tr = document.createElement("tr");
+        if (player.username === currentUser) {
+            tr.classList.add("active-user");
+        }
+
+        tr.innerHTML = `
+            <td><span class="rank-num">#${index + 1}</span></td>
+            <td>${player.username}</td>
+            <td>${player.totalScore}</td>
+        `;
+        tbody.appendChild(tr);
     });
 }
 

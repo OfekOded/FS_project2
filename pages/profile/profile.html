@@ -53,7 +53,25 @@
 
                 <div class="section-card">
                     <h3 class="section-title">🕹️ RECENT MATCHES</h3>
-                    <ul id="activity-list" class="activity-list"></ul>
+                    <div class="scroll-wrapper">
+                        <ul id="activity-list" class="activity-list"></ul>
+                    </div>
+                </div>
+
+                <div class="section-card full-width">
+                    <h3 class="section-title">🌍 GLOBAL LEADERBOARD</h3>
+                    <div class="scroll-wrapper">
+                        <table class="leaderboard-table">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Player</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leaderboard-body"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

@@ -105,6 +105,7 @@
 
 @media (min-width: 768px) {
     .details-grid { grid-template-columns: 1fr 1fr; }
+    .section-card.full-width { grid-column: span 2; }
 }
 
 .section-card {
@@ -112,6 +113,8 @@
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 12px;
     padding: 25px;
+    display: flex;
+    flex-direction: column;
 }
 
 .section-title {
@@ -140,13 +143,32 @@
     font-size: 1.1rem;
 }
 
+.scroll-wrapper {
+    max-height: 250px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.scroll-wrapper::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scroll-wrapper::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.scroll-wrapper::-webkit-scrollbar-thumb {
+    background: var(--accent-purple);
+    border-radius: 3px;
+}
+
 .activity-list { list-style: none; padding: 0; margin: 0; }
 
 .activity-list li {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 0;
+    padding: 12px 10px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.03);
     font-size: 0.9rem;
 }
@@ -157,3 +179,33 @@
 .act-name { font-weight: 600; color: var(--text-primary); }
 .act-date { font-size: 0.75rem; color: var(--text-muted); }
 .act-score { color: var(--accent-blue); font-weight: bold; }
+
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.leaderboard-table th {
+    text-align: left;
+    color: var(--text-muted);
+    padding: 10px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.leaderboard-table td {
+    padding: 12px 10px;
+    color: var(--text-primary);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.leaderboard-table tr:last-child td { border-bottom: none; }
+
+.leaderboard-table tr.active-user {
+    background: rgba(139, 92, 246, 0.1);
+    border-left: 3px solid var(--accent-purple);
+}
+
+.rank-num { font-weight: bold; color: var(--accent-blue); }
