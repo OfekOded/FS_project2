@@ -1,6 +1,4 @@
 function initNavbar() {
-    console.log("Navbar initialized!"); 
-
     checkLoginStatus();
     
     const logoBtn = document.getElementById('nav-logo-btn');
@@ -10,7 +8,7 @@ function initNavbar() {
             if (loggedUser) {
                 window.location.href = '/pages/games-gallery/games-gallery.html';
             } else {
-                window.location.href = '/index.html';
+                window.location.href = '/home.html';
             }
         });
     }
@@ -20,17 +18,13 @@ function initNavbar() {
         regBtn.addEventListener('click', () => {
             window.location.href = '/pages/register/register.html';
         });
-    } else {
-        console.error("Register button not found!"); // יעזור לנו לדעת אם האלמנט חסר
     }
 
-    // כפתור התנתקות
     const logoutBtn = document.querySelector('.btn-logout'); 
     if (logoutBtn) {
         logoutBtn.addEventListener('click', handleLogout); 
     }
 
-    // כפתור הפרופיל
     const profileBtn = document.getElementById('nav-profile-btn');
     if (profileBtn) {
         profileBtn.addEventListener('click', () => {
@@ -62,7 +56,7 @@ function checkLoginStatus() {
 
 function handleLogout() {
     document.cookie = "loggedUser=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-    window.location.href = '/index.html';
+    window.location.replace('/home.html');
 }
 
 function getCookie(name) {
@@ -72,12 +66,17 @@ function getCookie(name) {
     return null;
 }
 
-// --- השינוי הקריטי נמצא כאן למטה ---
+window.addEventListener("pageshow", function (event) {
+    var historyTraversal = event.persisted || 
+                           (typeof window.performance != "undefined" && 
+                            window.performance.navigation.type === 2);
+    if (historyTraversal) {
+        window.location.reload();
+    }
+});
 
-// בודק אם ה-HTML כבר קיים ומריץ מיד
 if (document.getElementById('nav-guest')) {
     initNavbar();
 } else {
-    // במקרה נדיר שהסקריפט רץ לפני שה-HTML סיים להיכנס ל-DOM
     setTimeout(initNavbar, 100);
 }

@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", loadUserProfile);
 function loadUserProfile() {
     const loggedUser = getCookie("loggedUser");
     if (!loggedUser) {
-        window.location.href = "/index.html"; 
+        window.location.replace("/home.html"); 
         return;
     }
 
@@ -13,9 +13,14 @@ function loadUserProfile() {
     if (currentUser) {
         document.getElementById("profile-username").textContent = currentUser.username;
         
+        const emailEl = document.getElementById("profile-email");
+        if (emailEl && currentUser.email) {
+            emailEl.textContent = currentUser.email;
+        }
+
         if (currentUser.lastLogin) {
             const date = new Date(currentUser.lastLogin);
-            document.getElementById("last-seen-date").textContent = date.toLocaleDateString();
+            document.getElementById("last-seen-date").textContent = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
         }
 
         const achievements = currentUser.achievements || {};
@@ -33,10 +38,10 @@ function loadUserProfile() {
         document.getElementById("best-wam").textContent = wamScore;
 
         const rankElement = document.getElementById("player-rank");
-        if (totalCombinedScore > 100) rankElement.textContent = "LEGEND";
-        else if (totalCombinedScore > 50) rankElement.textContent = "MASTER";
-        else if (totalCombinedScore > 20) rankElement.textContent = "PRO";
-        else if (totalCombinedScore > 0) rankElement.textContent = "PLAYER";
+        if (totalCombinedScore > 200) rankElement.textContent = "LEGEND";
+        else if (totalCombinedScore > 100) rankElement.textContent = "MASTER";
+        else if (totalCombinedScore > 50) rankElement.textContent = "PRO";
+        else if (totalCombinedScore > 20) rankElement.textContent = "PLAYER";
         else rankElement.textContent = "ROOKIE";
 
         renderActivityList(activities);
@@ -53,14 +58,18 @@ function renderActivityList(activities) {
         return;
     }
 
-    activities.reverse().forEach(act => {
+    const recentActivities = activities.slice().reverse().slice(0, 10);
+
+    recentActivities.forEach(act => {
         const li = document.createElement("li");
-        const dateStr = new Date(act.date).toLocaleDateString();
+        const dateObj = new Date(act.date);
+        const dateStr = dateObj.toLocaleDateString();
+        const timeStr = dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
         
         li.innerHTML = `
             <div class="act-meta">
                 <span class="act-name">${act.game}</span>
-                <span class="act-date">${dateStr}</span>
+                <span class="act-date">${dateStr} | ${timeStr}</span>
             </div>
             <span class="act-score">${act.score} PTS</span>
         `;

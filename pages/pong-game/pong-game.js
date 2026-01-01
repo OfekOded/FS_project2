@@ -1,9 +1,10 @@
 let pongGameState = {
     ballX: 490, ballY: 290,
-    ballSpeedX: 3, ballSpeedY: 3,
-    baseSpeed: 3,
+    ballSpeedX: 4, ballSpeedY: 4,
+    baseSpeed: 4,
     p1Y: 250, p2Y: 250,
     p1Score: 0, p2Score: 0,
+    guestMaxScore: 5,
     paddleHeight: 100,
     gameRunning: false,
     keys: {}
@@ -14,10 +15,7 @@ function initPongGame() {
     if (!startBtn) return;
 
     pongGameState.gameRunning = false;
-    pongGameState.p1Score = 0;
-    pongGameState.p2Score = 0;
-    pongGameState.keys = {}; 
-    updateScoreDisplay();
+    resetScores();
     resetPongPosition();
 
     startBtn.onclick = startPongMatch;
@@ -36,8 +34,20 @@ function initPongGame() {
 
 function startPongMatch() {
     if (pongGameState.gameRunning) return;
+    
+    resetScores();
     pongGameState.gameRunning = true;
     requestAnimationFrame(updatePongFrame);
+    
+    const startBtn = document.getElementById('pong-start-btn');
+    startBtn.textContent = "SURVIVE THE GUEST...";
+    startBtn.style.opacity = "0.7";
+}
+
+function resetScores() {
+    pongGameState.p1Score = 0;
+    pongGameState.p2Score = 0;
+    updateScoreDisplay();
 }
 
 function setDifficulty(btnElement, speed, height) {
@@ -111,7 +121,6 @@ function updatePongFrame() {
         pongGameState.ballSpeedY *= -1;
     }
 
-    // Improved Collision Logic
     if (pongGameState.ballX <= 27 && 
         pongGameState.ballY + 16 >= pongGameState.p1Y && 
         pongGameState.ballY <= pongGameState.p1Y + pongGameState.paddleHeight) {
@@ -131,12 +140,16 @@ function updatePongFrame() {
     if (pongGameState.ballX < 0) {
         pongGameState.p2Score++;
         updateScoreDisplay();
-        endPongPoint();
+        resetAfterPoint();
     } else if (pongGameState.ballX > boardWidth) {
         pongGameState.p1Score++;
         updateScoreDisplay();
-        savePongAchievement(); 
-        endPongPoint();
+        resetAfterPoint();
+    }
+
+    if (pongGameState.p2Score >= pongGameState.guestMaxScore) {
+        endGame();
+        return;
     }
 
     ball.style.left = pongGameState.ballX + 'px';
@@ -152,13 +165,36 @@ function updatePongFrame() {
 function updateScoreDisplay() {
     const p1Display = document.getElementById('pong-player1-score');
     const p2Display = document.getElementById('pong-player2-score');
+    
     if(p1Display) p1Display.textContent = pongGameState.p1Score;
-    if(p2Display) p2Display.textContent = pongGameState.p2Score;
+    
+    if(p2Display) {
+        p2Display.textContent = `${pongGameState.p2Score} / 5`; 
+        
+        if (pongGameState.p2Score >= 4) {
+            p2Display.style.color = "#FF3B3B"; 
+        } else {
+            p2Display.style.color = "var(--accent-purple)";
+        }
+    }
 }
 
-function endPongPoint() {
-    pongGameState.gameRunning = false;
+function resetAfterPoint() {
     resetPongPosition();
+}
+
+function endGame() {
+    pongGameState.gameRunning = false;
+    
+    const startBtn = document.getElementById('pong-start-btn');
+    if(startBtn) {
+        startBtn.textContent = "GAME OVER - TRY AGAIN";
+        startBtn.style.opacity = "1";
+    }
+
+    saveGameResults(pongGameState.p1Score);
+    
+    setTimeout(() => alert(`GAME OVER! Final Score: ${pongGameState.p1Score}`), 100);
 }
 
 function resetPongPosition() {
@@ -171,7 +207,6 @@ function resetPongPosition() {
     pongGameState.ballX = boardWidth / 2 - 8;
     pongGameState.ballY = boardHeight / 2 - 8;
     
-    // Randomize start direction
     let directionX = Math.random() > 0.5 ? 1 : -1;
     let directionY = (Math.random() * 2 - 1); 
 
@@ -187,7 +222,6 @@ function resetPongPosition() {
         ball.style.top = pongGameState.ballY + 'px';
     }
     
-    // Reset paddles to center
     pongGameState.p1Y = boardHeight / 2 - pongGameState.paddleHeight / 2;
     pongGameState.p2Y = boardHeight / 2 - pongGameState.paddleHeight / 2;
     
@@ -195,7 +229,7 @@ function resetPongPosition() {
     if(pRight) pRight.style.top = pongGameState.p2Y + 'px';
 }
 
-function savePongAchievement() {
+function saveGameResults(playerScore) {
     const name = getCookie("loggedUser");
     if (!name) return;
 
@@ -203,17 +237,32 @@ function savePongAchievement() {
     const userIndex = users.findIndex(u => u.username === name);
 
     if (userIndex !== -1) {
-        if (!users[userIndex].achievements) users[userIndex].achievements = {};
+        const user = users[userIndex];
+
+        if (!user.achievements) user.achievements = {};
+        const currentHighScore = user.achievements.pongScore || 0;
         
-        const currentHighScore = users[userIndex].achievements.pongScore || 0;
-        if (pongGameState.p1Score > currentHighScore) {
-            users[userIndex].achievements.pongScore = pongGameState.p1Score;
-            localStorage.setItem("users", JSON.stringify(users));
+        if (playerScore > currentHighScore) {
+            user.achievements.pongScore = playerScore;
         }
+
+        if (!user.activities) user.activities = [];
+        
+        user.activities.unshift({
+            game: "Pong Survival",
+            score: playerScore,
+            date: new Date().toISOString()
+        });
+
+        if (user.activities.length > 20) {
+            user.activities.pop();
+        }
+
+        users[userIndex] = user;
+        localStorage.setItem("users", JSON.stringify(users));
     }
 }
 
-// Helper needed because we are in a module-like structure
 function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
