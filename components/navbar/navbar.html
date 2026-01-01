@@ -21,50 +21,7 @@
             </span>
         </div>
         
-        <button class="btn-profile" id="open-profile-btn">PROFILE</button>
+        <button class="btn-profile" id="nav-profile-btn">PROFILE</button>
         <button class="btn-logout">LOGOUT</button>
     </div>
 </nav>
-
-<div id="profile-modal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" id="close-profile-btn">&times;</span>
-        
-        <div class="modal-header">
-            <h2>User Profile</h2>
-            <h3 id="modal-username" class="highlight">Player Name</h3>
-        </div>
-
-        <div class="modal-body">
-            <div class="modal-stats">
-                <div class="stat-box">
-                    <span class="label">Last Login:</span>
-                    <span class="value" id="modal-last-login">-</span>
-                </div>
-                <div class="stat-box">
-                    <span class="label">Total Logins:</span>
-                    <span class="value" id="modal-login-count">-</span>
-                </div>
-            </div>
-
-            <div class="modal-records">
-                <h4>Best Scores</h4>
-                <div class="records-row">
-                    <div class="record-item">
-                        <span>Pong</span>
-                        <span id="modal-best-pong" class="gold-text">0</span>
-                    </div>
-                    <div class="record-item">
-                        <span>Whack-a-Mole</span>
-                        <span id="modal-best-wam" class="gold-text">0</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-history">
-                <h4>Recent Activity</h4>
-                <ul id="modal-activity-list"></ul>
-            </div>
-        </div>
-    </div>
-</div>
