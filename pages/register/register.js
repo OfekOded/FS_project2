@@ -60,7 +60,7 @@ function processRegistration(event) {
     setRegMessage(feedbackBox, "Registration Successful! Redirecting...", "reg-success");
 
     setTimeout(() => {
-        loadPage("games-gallery");
+        window.location.href = "../games-gallery/games-gallery.html";
     }, 1500);
 }
 

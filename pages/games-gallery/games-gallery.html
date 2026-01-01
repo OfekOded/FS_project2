@@ -1,51 +1,68 @@
-<div class="gallery-full-wrapper">
-    <h1 class="gallery-main-title">GAMES EXPLORER</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlayGame - Gallery</title>
+    
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="games-gallery.css">
+</head>
+<body>
 
-    <div class="gallery-list-container">
+    <header id="navbar-container"></header>
+
+    <main>
+        <div class="gallery-full-wrapper">
+            <h1 class="gallery-main-title">GAMES EXPLORER</h1>
         
-        <div class="game-wide-item">
-            <div class="game-item-preview">
-                <img src="resources/images/PongArena.png" alt="Pong Arena">
-            </div>
-            <div class="game-item-info">
-                <h2 class="game-item-name">Pong Arena</h2>
-                <p class="game-item-desc">Experience the classic arcade battle. Defeat the AI in a high-speed match of precision and reflexes. First to 10 wins!</p>
-                <button class="game-item-btn" onclick="launchGame('pong')">LAUNCH GAME</button>
+            <div class="gallery-list-container">
+                
+                <div class="game-wide-item">
+                    <div class="game-item-preview">
+                        <img src="../../resources/images/PongArena.png" alt="Pong Arena">
+                    </div>
+                    <div class="game-item-info">
+                        <h2 class="game-item-name">Pong Arena</h2>
+                        <p class="game-item-desc">Experience the classic arcade battle. Defeat the AI in a high-speed match.</p>
+                        <a href="../pong-game/pong-game.html" class="game-item-btn">PLAY NOW</a>
+                    </div>
+                </div>
+        
+                <div class="game-wide-item">
+                    <div class="game-item-preview">
+                        <img src="../../resources/images/whackAMole.jpg" alt="Whack-a-Mole">
+                    </div>
+                    <div class="game-item-info">
+                        <h2 class="game-item-name">Whack-a-Mole</h2>
+                        <p class="game-item-desc">Test your speed and reflexes! Hit as many moles as you can.</p>
+                        <a href="../whack-a-mole/whack-a-mole.html" class="game-item-btn">PLAY NOW</a>
+                    </div>
+                </div>
+
+                <div class="game-wide-item item-locked">
+                    <div class="game-item-preview">
+                        <img src="../../resources/images/needForspeed.jpg" alt="Racing Game">
+                    </div>
+                    <div class="game-item-info">
+                        <h2 class="game-item-name">Neon Racer</h2>
+                        <p class="game-item-desc">Experience high-speed racing through futuristic city streets.</p>
+                        <button class="game-item-btn" disabled>COMING SOON</button>
+                    </div>
+                </div>
+
             </div>
         </div>
+    </main>
 
-        <div class="game-wide-item">
-            <div class="game-item-preview">
-                <img src="resources/images/whackAMole.jpg" alt="Whack-a-Mole">
-            </div>
-            <div class="game-item-info">
-                <h2 class="game-item-name">Whack-a-Mole</h2>
-                <p class="game-item-desc">Test your speed and reflexes! Hit as many moles as you can before time runs out. Fast-paced arcade action.</p>
-                <button class="game-item-btn" onclick="launchGame('whack')">LAUNCH GAME</button>
-            </div>
-        </div>
+    <footer id="footer-container"></footer>
 
-        <div class="game-wide-item item-locked">
-            <div class="game-item-preview">
-                <img src="resources/images/needForspeed.jpg" alt="Racing Game">
-            </div>
-            <div class="game-item-info">
-                <h2 class="game-item-name">Neon Racer</h2>
-                <p class="game-item-desc">Experience high-speed racing through futuristic city streets. Currently under development.</p>
-                <button class="game-item-btn" disabled>COMING SOON</button>
-            </div>
-        </div>
-
-        <div class="game-wide-item item-locked">
-            <div class="game-item-preview">
-                <img src="resources/images/callOfDuty.jpg" alt="FPS Game">
-            </div>
-            <div class="game-item-info">
-                <h2 class="game-item-name">Tactical Ops</h2>
-                <p class="game-item-desc">Coordinate with your team and complete high-risk missions in this tactical simulation. Locked.</p>
-                <button class="game-item-btn" disabled>LOCKED</button>
-            </div>
-        </div>
-
-    </div>
-</div>
+    <script src="../../main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadComponent('navbar-container', '../../components/navbar/navbar');
+            loadComponent('footer-container', '../../components/footer/footer');
+        });
+    </script>
+</body>
+</html>

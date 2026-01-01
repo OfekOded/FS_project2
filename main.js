@@ -1,44 +1,33 @@
-async function loadComponent(containerId, path, name) {
+async function loadComponent(containerId, basePath) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
     try {
-        const htmlResponse = await fetch(`${path}/${name}.html`);
-        if (!htmlResponse.ok) return;
+        const htmlResponse = await fetch(`${basePath}.html`);
+        if (htmlResponse.ok) {
+            container.innerHTML = await htmlResponse.text();
+        } else {
+            console.error(`Failed to load HTML for ${basePath}`);
+            return;
+        }
 
-        const html = await htmlResponse.text();
-        document.getElementById(containerId).innerHTML = html;
+      
+        if (!document.querySelector(`link[href="${basePath}.css"]`)) {
+            const link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.href = `${basePath}.css`;
+            document.head.appendChild(link);
+        }
 
-        const cssPath = `${path}/${name}.css`;
-        const oldLink = document.querySelector(`link[href="${cssPath}"]`);
-        if (oldLink) oldLink.remove();
-
-        const link = document.createElement("link");
-        link.rel = "stylesheet";
-        link.href = cssPath;
-        document.head.appendChild(link);
-
-        const jsPath = `${path}/${name}.js`;
-        const oldScript = document.querySelector(`script[src="${jsPath}"]`);
+        const scriptPath = `${basePath}.js`;
+        const oldScript = document.querySelector(`script[src="${scriptPath}"]`);
         if (oldScript) oldScript.remove();
 
-        try {
-            const jsResponse = await fetch(jsPath);
-            if (jsResponse.ok) {
-                const script = document.createElement("script");
-                script.src = jsPath;
-                document.body.appendChild(script);
-            }
-        } catch (e) { }
+        const script = document.createElement("script");
+        script.src = scriptPath;
+        document.body.appendChild(script);
 
     } catch (error) {
-        console.error(error);
+        console.error(`Error loading component ${basePath}:`, error);
     }
 }
-
-function loadPage(pageName) {
-    loadComponent("content-placeholder", `pages/${pageName}`, pageName);
-}
-
-window.onload = () => {
-    loadComponent("navbar-container", "components/navbar", "navbar");
-    loadComponent("footer-container", "components/footer", "footer");
-    loadPage("home");
-};

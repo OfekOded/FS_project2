@@ -57,7 +57,7 @@ function executeLogin(event) {
 
     document.cookie = `loggedUser=${username}; path=/; max-age=3600`;
 
-    loadPage("games-gallery");
+    window.location.href = "../games-gallery/games-gallery.html";
 }
 
 function updateLoginStatus(element, message) {

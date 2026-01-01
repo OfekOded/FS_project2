@@ -4,10 +4,12 @@
     </div>
 
     <ul class="nav-links" id="nav-guest">
-        <li><button onclick="loadPage('login')">Login</button></li>
+        <li>
+            <button id="nav-login-btn">Login</button>
+        </li>
     </ul>
 
-    <div class="nav-user-panel" id="nav-user" style="display: none;">
+    <div class="nav-user-panel" id="nav-user">
         <div class="user-info">
             <div class="user-avatar">
                 <svg viewBox="0 0 24 24" fill="currentColor">
@@ -18,6 +20,6 @@
                 Hello, <span id="nav-username" class="highlight">Commander</span>
             </span>
         </div>
-        <button onclick="handleLogout()" class="btn-logout">LOGOUT</button>
+        <button class="btn-logout">LOGOUT</button>
     </div>
 </nav>

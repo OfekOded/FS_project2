@@ -1,10 +1,21 @@
 function initNavbar() {
     checkLoginStatus();
-    window.addEventListener('userLoginStateChanged', checkLoginStatus);
-
+    
     const logoBtn = document.getElementById('nav-logo-btn');
     if (logoBtn) {
         logoBtn.addEventListener('click', handleLogoClick);
+    }
+
+    const loginBtn = document.getElementById('nav-login-btn');
+    if (loginBtn) {
+        loginBtn.addEventListener('click', () => {
+            window.location.href = '/pages/login/login.html';
+        });
+    }
+
+    const logoutBtn = document.querySelector('.btn-logout'); 
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', handleLogout); 
     }
 }
 
@@ -12,9 +23,9 @@ function handleLogoClick() {
     const loggedUser = getCookie("loggedUser");
     
     if (loggedUser) {
-        loadPage('games-gallery');
+        window.location.href = '/pages/games-gallery/games-gallery.html';
     } else {
-        loadPage('home');
+        window.location.href = '/index.html';
     }
 }
 
@@ -41,8 +52,7 @@ function checkLoginStatus() {
 
 function handleLogout() {
     document.cookie = "loggedUser=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    checkLoginStatus();
-    loadPage('home');
+    window.location.href = '/index.html';
 }
 
 function getCookie(name) {

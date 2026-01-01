@@ -1,26 +1,56 @@
-<div class="login-wrapper">
-    <div class="login-panel">
-        <h1 class="login-main-title">WELCOME BACK</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlayGame - Login</title>
+    
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+    <header id="navbar-container"></header>
+
+    <main>
+        <div class="login-wrapper">
+            <div class="login-panel">
+                <h1 class="login-main-title">WELCOME BACK</h1>
+                
+                <form id="login-entry-form" novalidate>
+                    <div class="login-field-container">
+                        <label for="user-login-id" class="login-label">Username</label>
+                        <input id="user-login-id" class="login-input" type="text" required autocomplete="username">
+                    </div>
         
-        <form id="login-entry-form" novalidate>
-            <div class="login-field-container">
-                <label for="user-login-id" class="login-label">Username</label>
-                <input id="user-login-id" class="login-input" type="text" required autocomplete="username">
+                    <div class="login-field-container">
+                        <label for="user-login-pass" class="login-label">Password</label>
+                        <input id="user-login-pass" class="login-input" type="password" required autocomplete="current-password">
+                    </div>
+        
+                    <button class="login-action-btn" type="submit">ENTER SYSTEM</button>
+                    
+                    <div id="login-feedback-msg" class="login-status-text"></div>
+                </form>
+        
+                <div class="login-footer-area">
+                    <span class="login-footer-text">New here?</span>
+                    <a href="../register/register.html" class="login-register-link">Create Account</a>
+                </div>
             </div>
-
-            <div class="login-field-container">
-                <label for="user-login-pass" class="login-label">Password</label>
-                <input id="user-login-pass" class="login-input" type="password" required autocomplete="current-password">
-            </div>
-
-            <button class="login-action-btn" type="submit">ENTER SYSTEM</button>
-            
-            <div id="login-feedback-msg" class="login-status-text"></div>
-        </form>
-
-        <div class="login-footer-area">
-            <span class="login-footer-text">New here?</span>
-            <a href="#" class="login-register-link" onclick="loadPage('register'); return false;">Create Account</a>
         </div>
-    </div>
-</div>
+    </main>
+
+    <footer id="footer-container"></footer>
+
+    <script src="../../main.js"></script>
+    <script src="login.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadComponent('navbar-container', '../../components/navbar/navbar');
+            loadComponent('footer-container', '../../components/footer/footer');
+        });
+    </script>
+</body>
+</html>

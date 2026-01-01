@@ -1,5 +1,3 @@
-let pongListenersAdded = false;
-
 let pongGameState = {
     ballX: 490, ballY: 290,
     ballSpeedX: 3, ballSpeedY: 3,
@@ -23,20 +21,16 @@ function initPongGame() {
 
     startBtn.onclick = startPongMatch;
     
-    if (!pongListenersAdded) {
-        document.addEventListener('keydown', (e) => {
-            if(["ArrowUp", "ArrowDown", "KeyW", "KeyS"].includes(e.code)) {
-                e.preventDefault(); 
-            }
-            pongGameState.keys[e.code] = true;
-        });
+    document.addEventListener('keydown', (e) => {
+        if(["ArrowUp", "ArrowDown", "KeyW", "KeyS"].includes(e.code)) {
+            e.preventDefault(); 
+        }
+        pongGameState.keys[e.code] = true;
+    });
 
-        document.addEventListener('keyup', (e) => {
-            pongGameState.keys[e.code] = false;
-        });
-        
-        pongListenersAdded = true;
-    }
+    document.addEventListener('keyup', (e) => {
+        pongGameState.keys[e.code] = false;
+    });
     
     setPongDifficulty(3, 100);
 }
@@ -184,11 +178,11 @@ function resetPongPosition() {
 }
 
 function savePongAchievement() {
-    const username = getCookie("loggedUser");
-    if (!username) return;
+    const name = document.cookie.split('; ').find(row => row.startsWith('loggedUser='))?.split('=')[1];
+    if (!name) return;
 
     const users = JSON.parse(localStorage.getItem("users")) || [];
-    const userIndex = users.findIndex(u => u.username === username);
+    const userIndex = users.findIndex(u => u.username === name);
 
     if (userIndex !== -1) {
         if (!users[userIndex].achievements) users[userIndex].achievements = {};
@@ -199,12 +193,6 @@ function savePongAchievement() {
             localStorage.setItem("users", JSON.stringify(users));
         }
     }
-}
-
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
 }
 
 initPongGame();

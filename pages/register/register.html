@@ -1,46 +1,72 @@
-<div class="reg-wrapper">
-    <div class="reg-container">
-        <div class="reg-header">
-            <h2 class="reg-title">CREATE ACCOUNT</h2>
-            <p class="reg-subtitle">Join the elite squad today</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlayGame - Register</title>
+    
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+
+    <header id="navbar-container"></header>
+
+    <main>
+        <div class="reg-wrapper">
+            <div class="reg-container">
+                <div class="reg-header">
+                    <h2 class="reg-title">CREATE ACCOUNT</h2>
+                    <p class="reg-subtitle">Join the elite squad today</p>
+                </div>
+        
+                <form id="signup-form" class="reg-form" novalidate>
+                    <div class="reg-field-group">
+                        <label for="signup-user" class="reg-label">Username</label>
+                        <input type="text" id="signup-user" class="reg-input" autocomplete="off" required>
+                    </div>
+        
+                    <div class="reg-field-group">
+                        <label for="signup-email" class="reg-label">Email Address</label>
+                        <input type="email" id="signup-email" class="reg-input" autocomplete="off" required>
+                    </div>
+        
+                    <div class="reg-field-group">
+                        <label for="signup-pass" class="reg-label">Password</label>
+                        <input type="password" id="signup-pass" class="reg-input" autocomplete="new-password" required>
+                    </div>
+                    <div class="reg-field-group">
+                        <label for="signup-confirm" class="reg-label">Confirm Password</label>
+                        <input type="password" id="signup-confirm" class="reg-input" autocomplete="new-password" required>
+                    </div>
+        
+                    <div class="reg-checkbox-group">
+                        <input type="checkbox" id="signup-terms" class="reg-checkbox" required>
+                        <label for="signup-terms" class="reg-checkbox-label">I agree to the <span class="reg-highlight">Terms & Conditions</span></label>
+                    </div>
+        
+                    <button type="submit" class="reg-submit-btn">START GAME</button>
+        
+                    <div id="signup-feedback" class="reg-status-message"></div>
+                </form>
+        
+                <div class="reg-footer">
+                    <p>Already a member? <a href="../login/login.html" class="reg-login-link">Login here</a></p>
+                </div>
+            </div>
         </div>
+    </main>
 
-        <form id="signup-form" class="reg-form" novalidate>
-            <div class="reg-field-group">
-                <label for="signup-user" class="reg-label">Username</label>
-                <input type="text" id="signup-user" class="reg-input" autocomplete="off" required>
-            </div>
+    <footer id="footer-container"></footer>
 
-            <div class="reg-field-group">
-                <label for="signup-email" class="reg-label">Email Address</label>
-                <input type="email" id="signup-email" class="reg-input" autocomplete="off" required>
-            </div>
-
-
-            <div class="reg-field-group">
-                <label for="signup-pass" class="reg-label">Password</label>
-                <input type="password" id="signup-pass" class="reg-input" autocomplete="new-password" required>
-            </div>
-            <div class="reg-field-group">
-                <label for="signup-confirm" class="reg-label">Confirm Password</label>
-                <input type="password" id="signup-confirm" class="reg-input" autocomplete="new-password" required>
-            </div>
-
-
-            <div class="reg-checkbox-group">
-                <input type="checkbox" id="signup-terms" class="reg-checkbox" required>
-                <label for="signup-terms" class="reg-checkbox-label">I agree to the <span class="reg-highlight">Terms &
-                        Conditions</span></label>
-            </div>
-
-            <button type="submit" class="reg-submit-btn">START GAME</button>
-
-            <div id="signup-feedback" class="reg-status-message"></div>
-        </form>
-
-        <div class="reg-footer">
-            <p>Already a member? <a href="#" class="reg-login-link" onclick="loadPage('login'); return false;">Login
-                    here</a></p>
-        </div>
-    </div>
-</div>
+    <script src="../../main.js"></script>
+    <script src="register.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadComponent('navbar-container', '../../components/navbar/navbar');
+            loadComponent('footer-container', '../../components/footer/footer');
+        });
+    </script>
+</body>
+</html>

@@ -1,19 +1,42 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Modular Project</title>
+    <title>PlayGame - Home</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="home.css">
 </head>
 <body>
 
     <header id="navbar-container"></header>
 
-    <main id="content-placeholder"></main>
+    <main>
+        <section class="main-hero">
+            <div class="hero-content">
+                <h1>NEXT LEVEL <span class="highlight">GAMING</span></h1>
+                <p>Experience the ultimate collection of AAA titles and indie gems.</p>
+                <div class="hero-actions">
+                    <a href="pages\register\register.html" class="btn-primary">JOIN NOW</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="games-section">
+            <h1 class="section-title">TOP GAMES</h1>
+            <div id="carousel-container"></div>
+        </section>
+    </main>
 
     <footer id="footer-container"></footer>
 
     <script src="main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadComponent('navbar-container', 'components/navbar/navbar');
+            loadComponent('carousel-container', 'components/carousel/carousel');
+            loadComponent('footer-container', 'components/footer/footer');
+        });
+    </script>
 </body>
 </html>
