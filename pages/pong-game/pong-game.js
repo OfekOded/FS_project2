@@ -1,8 +1,8 @@
 let pongGameState = {
-    ballX: 490, ballY: 290,
+    ballX: 390, ballY: 240,
     ballSpeedX: 4, ballSpeedY: 4,
     baseSpeed: 4,
-    p1Y: 250, p2Y: 250,
+    p1Y: 200, p2Y: 200,
     p1Score: 0, p2Score: 0,
     guestMaxScore: 5,
     paddleHeight: 100,
@@ -20,14 +20,14 @@ function initPongGame() {
 
     startBtn.onclick = startPongMatch;
     
-    document.addEventListener('keydown', (e) => {
+    window.addEventListener('keydown', (e) => {
         if(["ArrowUp", "ArrowDown", "KeyW", "KeyS"].includes(e.code)) {
             e.preventDefault(); 
         }
         pongGameState.keys[e.code] = true;
     });
 
-    document.addEventListener('keyup', (e) => {
+    window.addEventListener('keyup', (e) => {
         pongGameState.keys[e.code] = false;
     });
 }
@@ -37,11 +37,12 @@ function startPongMatch() {
     
     resetScores();
     pongGameState.gameRunning = true;
+    resetPongPosition();
     requestAnimationFrame(updatePongFrame);
     
     const startBtn = document.getElementById('pong-start-btn');
     startBtn.textContent = "SURVIVE THE GUEST...";
-    startBtn.style.opacity = "0.7";
+    startBtn.classList.add('disabled-btn');
 }
 
 function resetScores() {
@@ -115,10 +116,10 @@ function updatePongFrame() {
 
     if (pongGameState.ballY <= 0) {
         pongGameState.ballY = 0;
-        pongGameState.ballSpeedY *= -1;
+        pongGameState.ballSpeedY = Math.abs(pongGameState.ballSpeedY);
     } else if (pongGameState.ballY >= (boardHeight - 16)) {
         pongGameState.ballY = boardHeight - 16;
-        pongGameState.ballSpeedY *= -1;
+        pongGameState.ballSpeedY = -Math.abs(pongGameState.ballSpeedY);
     }
 
     if (pongGameState.ballX <= 27 && 
@@ -189,12 +190,12 @@ function endGame() {
     const startBtn = document.getElementById('pong-start-btn');
     if(startBtn) {
         startBtn.textContent = "GAME OVER - TRY AGAIN";
-        startBtn.style.opacity = "1";
+        startBtn.classList.remove('disabled-btn');
     }
 
     saveGameResults(pongGameState.p1Score);
     
-    setTimeout(() => alert(`GAME OVER! Final Score: ${pongGameState.p1Score}`), 100);
+    setTimeout(() => alert(`GAME OVER! Final Score: ${pongGameState.p1Score}`), 50);
 }
 
 function resetPongPosition() {

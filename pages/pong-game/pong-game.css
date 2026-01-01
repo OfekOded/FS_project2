@@ -152,3 +152,9 @@
     color: #0a0b1e; 
     box-shadow: 0 0 20px rgba(0, 247, 255, 0.6);
 }
+
+.disabled-btn {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: default;
+}
